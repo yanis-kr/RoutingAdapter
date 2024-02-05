@@ -22,4 +22,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\My.AppHandlers\My.AppHandlers.csproj" />
+    <ProjectReference Include="..\..\src\My.ApplicationCore\My.AppCore.csproj" />
+    <ProjectReference Include="..\..\src\My.Domain\My.Domain.csproj" />
+    <ProjectReference Include="..\..\src\My.Infrastructure\My.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\My.WebApi\My.WebApi.csproj" />
+  </ItemGroup>
+
 </Project>
