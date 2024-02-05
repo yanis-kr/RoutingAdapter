@@ -1,12 +1,17 @@
 //using CqrsMediatrExample.Behaviors;
 using Microsoft.OpenApi.Models;
+using My.AppCore;
+using My.AppHandlers;
 using My.AppHandlers.DataStore;
+using My.Domain;
 using My.Domain.Models.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DomainAccount).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyDomainServiceActivator).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyAppCoreServiceActivator).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyAppHandlersServiceActivator).Assembly));
 
 builder.Services.AddSingleton<FakeDataStore>();
 
