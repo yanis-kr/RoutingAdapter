@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using My.Domain.Models.Domain;
 
 namespace My.AppHandlers.Queries;

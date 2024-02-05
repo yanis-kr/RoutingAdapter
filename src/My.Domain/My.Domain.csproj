@@ -7,8 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Sys2\" />
-    <Folder Include="Models\Sys1\" />
+    <Compile Remove="Models\Sys1\**" />
+    <Compile Remove="Models\Sys2\**" />
+    <EmbeddedResource Remove="Models\Sys1\**" />
+    <EmbeddedResource Remove="Models\Sys2\**" />
+    <None Remove="Models\Sys1\**" />
+    <None Remove="Models\Sys2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
 
 </Project>
