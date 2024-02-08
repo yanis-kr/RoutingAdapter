@@ -18,7 +18,7 @@ public class AccountsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetAccounts()
     {
-        var accounts = await _mediator.Send(new GetAccountsQuerySys2()).ConfigureAwait(true);
+        var accounts = await _mediator.Send(new GetAccountsQuery()).ConfigureAwait(true);
 
         return Ok(accounts);
     }
