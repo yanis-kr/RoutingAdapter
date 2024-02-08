@@ -6,10 +6,26 @@ public class MySysRouterStub : ISysRouter
 {
     private readonly List<int> _accountsSys1 = new List<int> { 1, 3 };
     private readonly List<int> _accountsSys2 = new List<int> { 2, 3 };
+    private readonly IFeatureFlag _featureFlag;
+
+    public MySysRouterStub(IFeatureFlag featureFlag)
+    {
+        _featureFlag = featureFlag;
+    }
 
     public TargetSystem GetRoute(int accountId)
     {
-        if (_accountsSys1.Contains(accountId))
+        if (_accountsSys1.Contains(accountId) && _accountsSys2.Contains(accountId))
+        {
+            if(_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
+            {
+                return TargetSystem.MySys1;
+            } else
+            {
+                return TargetSystem.MySys2;
+            }
+        }
+        else if (_accountsSys1.Contains(accountId))
         {
             return TargetSystem.MySys1;
         }

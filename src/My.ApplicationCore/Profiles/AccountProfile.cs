@@ -8,7 +8,10 @@ public class AccountProfile : Profile
 {
     public AccountProfile()
     {
-        CreateMap<DomainAccount, MySys1Account>().ReverseMap();
-        CreateMap<DomainAccount, MySys2Account>().ReverseMap();
+        CreateMap<DomainAccount, MySys1Account>().ReverseMap()
+            .ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.MySys1Field));
+
+        CreateMap<DomainAccount, MySys2Account>().ReverseMap()
+            .ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.MySys2Field));
     }
 }
