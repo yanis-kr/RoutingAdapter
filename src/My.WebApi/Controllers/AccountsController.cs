@@ -18,7 +18,7 @@ public class AccountsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetAccounts()
     {
-        var accounts = await _mediator.Send(new GetAccountsQuery());
+        var accounts = await _mediator.Send(new GetAccountsQuerySys2()).ConfigureAwait(true);
 
         return Ok(accounts);
     }
@@ -26,7 +26,7 @@ public class AccountsController : ControllerBase
     [HttpGet("{id:int}", Name = "GetAccountById")]
     public async Task<ActionResult> GetAccountById(int id)
     {
-        var account = await _mediator.Send(new GetAccountByIdQuery(id));
+        var account = await _mediator.Send(new GetAccountByIdQuery(id)).ConfigureAwait(true);
 
         return Ok(account);
     }
@@ -34,9 +34,9 @@ public class AccountsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> AddAccount([FromBody] DomainAccount account)
     {
-        var accountToReturn = await _mediator.Send(new AddAccountCommand(account));
+        var accountToReturn = await _mediator.Send(new AddAccountCommand(account)).ConfigureAwait(true);
 
-        await _mediator.Publish(new AccountAddedNotification(accountToReturn));
+        await _mediator.Publish(new AccountAddedNotification(accountToReturn)).ConfigureAwait(true);
 
         return CreatedAtRoute("GetAccountById", new { id = accountToReturn.Id }, accountToReturn);
     }

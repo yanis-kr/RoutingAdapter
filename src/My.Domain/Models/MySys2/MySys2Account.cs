@@ -1,9 +1,9 @@
-﻿namespace My.Domain.Models.MySys1;
+namespace My.Domain.Models.MySys2;
 
 public class MySys2Account
 {
     public int Id { get; set; }
     public string? Name { get; set; }
 
-    public string? MySys2Prop { get; set; }
+    public string? MySys2Field { get; set; }
 }
