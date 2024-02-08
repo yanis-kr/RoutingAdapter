@@ -6,10 +6,11 @@ using AutoMapper;
 using My.Domain.Enums;
 using My.Domain.Models.MySys1;
 using My.Domain.Models.MySys2;
+using My.AppServices.Validators;
 
 namespace My.AppHandlers.Handlers;
 
-public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccount>
+public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccountResponse>
 {
     private readonly IRepositoryMySys1 _mySys1Repo;
     private readonly IRepositoryMySys2 _mySys2Repo;
@@ -31,8 +32,16 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
         _mapper = mapper;
     }
 
-    public async Task<DomainAccount> Handle(AddAccountCommand request, CancellationToken cancellationToken)
+    public async Task<DomainAccountResponse> Handle(AddAccountCommand request, CancellationToken cancellationToken)
     {
+        var validator = new CreateAccountCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken).ConfigureAwait(true);
+
+        if (validationResult.Errors.Count > 0)
+        {
+            throw new Exceptions.ValidationException(validationResult);
+        }
+
         var isSys1 = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1);
         if (isSys1)
         {
@@ -45,6 +54,23 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
             await _mySys2Repo.AddAccount(account).ConfigureAwait(false);
         }
 
-        return request.Account;
+        var createAccountCommandResponse = new DomainAccountResponse();
+        if (validationResult.Errors.Count > 0)
+        {
+            createAccountCommandResponse.Success = false;
+            createAccountCommandResponse.ValidationErrors = new List<string>();
+            foreach (var error in validationResult.Errors)
+            {
+                createAccountCommandResponse.ValidationErrors.Add(error.ErrorMessage);
+            }
+        }
+        if (createAccountCommandResponse.Success)
+        {
+            //may create some mappings here, perhaps returning more granular DTO
+            createAccountCommandResponse.Account = request.Account;
+        }
+
+        return createAccountCommandResponse;
+
     }
 }

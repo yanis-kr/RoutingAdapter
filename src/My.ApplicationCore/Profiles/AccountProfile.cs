@@ -13,5 +13,7 @@ public class AccountProfile : Profile
 
         CreateMap<DomainAccount, MySys2Account>().ReverseMap()
             .ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.MySys2Field));
+
+        CreateMap<DomainAccount, DomainAccountResponse>().ReverseMap();
     }
 }

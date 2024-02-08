@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1C21D217-B2C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.Domain", "src\My.Domain\My.Domain.csproj", "{E0D50718-4C5E-40B8-854D-728F7FD05193}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.AppCore", "src\My.ApplicationCore\My.AppCore.csproj", "{084BF3E6-1941-4510-AB67-4A3A527BCBA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.AppMappings", "src\My.ApplicationCore\My.AppMappings.csproj", "{084BF3E6-1941-4510-AB67-4A3A527BCBA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.AppHandlers", "src\My.AppHandlers\My.AppHandlers.csproj", "{575736CC-A58E-4F07-81FD-9385962AE811}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.AppServices", "src\My.AppHandlers\My.AppServices.csproj", "{575736CC-A58E-4F07-81FD-9385962AE811}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.Infrastructure", "src\My.Infrastructure\My.Infrastructure.csproj", "{AB4230B1-1384-47DB-9698-4180043DA25C}"
 EndProject

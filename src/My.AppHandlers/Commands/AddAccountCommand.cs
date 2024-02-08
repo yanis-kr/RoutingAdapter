@@ -3,4 +3,4 @@ using My.Domain.Models.Domain;
 
 namespace My.AppHandlers.Commands;
 
-public record AddAccountCommand(DomainAccount Account) : IRequest<DomainAccount>;
+public record AddAccountCommand(DomainAccount Account) : IRequest<DomainAccountResponse>;

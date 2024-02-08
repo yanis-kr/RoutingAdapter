@@ -1,7 +1,7 @@
 using My.Domain.Contracts;
 using My.Domain.Enums;
 
-namespace My.Infrastructure.Router;
+namespace My.Infrastructure.MySysRouter;
 public class MySysRouterStub : ISysRouter
 {
     private readonly List<int> _accountsSys1 = new List<int> { 1, 3 };
@@ -17,10 +17,11 @@ public class MySysRouterStub : ISysRouter
     {
         if (_accountsSys1.Contains(accountId) && _accountsSys2.Contains(accountId))
         {
-            if(_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
+            if (_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
             {
                 return TargetSystem.MySys1;
-            } else
+            }
+            else
             {
                 return TargetSystem.MySys2;
             }

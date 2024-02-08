@@ -32,12 +32,13 @@ public class AccountsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddAccount([FromBody] DomainAccount account)
+    public async Task<ActionResult<DomainAccountResponse>> AddAccount([FromBody] DomainAccount account)
     {
-        var accountToReturn = await _mediator.Send(new AddAccountCommand(account)).ConfigureAwait(true);
+        var result = await _mediator.Send(new AddAccountCommand(account)).ConfigureAwait(true);
 
-        await _mediator.Publish(new AccountAddedNotification(accountToReturn)).ConfigureAwait(true);
+        await _mediator.Publish(new AccountAddedNotification(result.Account)).ConfigureAwait(true);
 
-        return CreatedAtRoute("GetAccountById", new { id = accountToReturn.Id }, accountToReturn);
+        //return CreatedAtRoute("GetAccountById", new { id = result.Id }, result);
+        return Ok(result);
     }
 }
