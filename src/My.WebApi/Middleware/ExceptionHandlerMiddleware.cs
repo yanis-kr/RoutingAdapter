@@ -17,11 +17,11 @@ public class ExceptionHandlerMiddleware
     {
         try
         {
-            await _next(context);
+            await _next(context).ConfigureAwait(true);
         }
         catch (Exception ex)
         {
-            await ConvertException(context, ex);
+            await ConvertException(context, ex).ConfigureAwait(true);
         }
     }
 
