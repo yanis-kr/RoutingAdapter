@@ -18,7 +18,7 @@ public class AccountProfileTests
     }
 
     [Fact]
-    public void DomainAccount_To_MySys1Account_Mapping_Valid()
+    public void AccountProfile_DomainAccount_To_MySys1Account_Mapping_Valid()
     {
         // Arrange
         var domainAccount = new DomainAccount
@@ -39,7 +39,7 @@ public class AccountProfileTests
     }
 
     [Fact]
-    public void MySys1Account_To_DomainAccount_Mapping_Valid()
+    public void AccountProfile_MySys1Account_To_DomainAccount_Mapping_Valid()
     {
         MySys1Account mySys1Account = new MySys1Account
         {
@@ -60,7 +60,7 @@ public class AccountProfileTests
     // Similarly, add tests for MySys2Account and DomainAccountResponse mappings
 
     [Fact]
-    public void DomainAccount_To_MySys2Account_Mapping_Valid()
+    public void AccountProfile_DomainAccount_To_MySys2Account_Mapping_Valid()
     {
         // Arrange
         var domainAccount = new DomainAccount
@@ -82,7 +82,7 @@ public class AccountProfileTests
     }
 
     [Fact]
-    public void MySys2Account_To_DomainAccount_Mapping_Valid()
+    public void AccountProfile_MySys2Account_To_DomainAccount_Mapping_Valid()
     {
         MySys2Account mySys2Account = new MySys2Account
         {
