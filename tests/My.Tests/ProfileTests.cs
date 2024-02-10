@@ -4,7 +4,7 @@ using My.Domain.Models.Domain;
 using My.Domain.Models.MySys1;
 using My.Domain.Models.MySys2;
 
-namespace My.Tests;
+namespace My.Application.Tests.Profiles;
 
 public class AccountProfileTests
 {

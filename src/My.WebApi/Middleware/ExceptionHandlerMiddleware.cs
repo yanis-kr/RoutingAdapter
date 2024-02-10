@@ -25,7 +25,7 @@ public class ExceptionHandlerMiddleware
         }
     }
 
-    private Task ConvertException(HttpContext context, Exception exception)
+    private static Task ConvertException(HttpContext context, Exception exception)
     {
         var httpStatusCode = HttpStatusCode.InternalServerError;
 

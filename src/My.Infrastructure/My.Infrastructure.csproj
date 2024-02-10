@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,7 +11,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\My.AppHandlers\My.AppServices.csproj" />
+    <ProjectReference Include="..\My.Application\My.Application.csproj" />
   </ItemGroup>
 
 </Project>

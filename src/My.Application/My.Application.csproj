@@ -17,7 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\My.ApplicationCore\My.AppMappings.csproj" />
 	  <ProjectReference Include="..\My.Domain\My.Domain.csproj" />
 	</ItemGroup>
 </Project>

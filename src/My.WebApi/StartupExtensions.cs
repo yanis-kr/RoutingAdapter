@@ -20,11 +20,10 @@ public static class StartupExtensions
     {
         //mediatR registrations
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyDomainServiceActivator).Assembly));
-        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyAppMappingsServiceActivator).Assembly));
-        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyAppServicesServiceActivator).Assembly));
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyApplicationServiceActivator).Assembly));
 
         //automapper
-        builder.Services.AddAutoMapper(typeof(MyAppMappingsServiceActivator).Assembly);
+        builder.Services.AddAutoMapper(typeof(MyApplicationServiceActivator).Assembly);
 
         //all singletons until we have a real implementation
         builder.Services.AddSingleton<IEventBus, EventBusStub>();

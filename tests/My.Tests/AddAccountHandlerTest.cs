@@ -6,7 +6,7 @@ using My.AppHandlers.Handlers;
 using My.Domain.Contracts;
 using My.Domain.Models.Domain;
 
-namespace My.AppHandlers.Tests.Handlers;
+namespace My.Application.Tests.Handlers;
 
 public class AddAccountHandlerTests
 {
