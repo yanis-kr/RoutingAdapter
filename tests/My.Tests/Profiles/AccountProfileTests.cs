@@ -4,7 +4,7 @@ using My.Domain.Models.Domain;
 using My.Domain.Models.MySys1;
 using My.Domain.Models.MySys2;
 
-namespace My.Application.Tests.Profiles;
+namespace My.Tests.Profiles;
 
 public class AccountProfileTests
 {
@@ -41,7 +41,7 @@ public class AccountProfileTests
     [Fact]
     public void AccountProfile_MySys1Account_To_DomainAccount_Mapping_Valid()
     {
-        MySys1Account mySys1Account = new MySys1Account
+        var mySys1Account = new MySys1Account
         {
             MySys1Field = "SomeValue",
             Name = "SomeName",
@@ -84,7 +84,7 @@ public class AccountProfileTests
     [Fact]
     public void AccountProfile_MySys2Account_To_DomainAccount_Mapping_Valid()
     {
-        MySys2Account mySys2Account = new MySys2Account
+        var mySys2Account = new MySys2Account
         {
             MySys2Field = "SomeValue",
             Name = "SomeName",

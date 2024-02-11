@@ -2,19 +2,19 @@ using Serilog;
 using My.WebApi;
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
+    .WriteTo.Console(formatProvider: System.Globalization.CultureInfo.InvariantCulture)
     .CreateBootstrapLogger();
 
 Log.Information("My API is starting");
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, loggerConfiguration) =>
-{
-    loggerConfiguration
-         .WriteTo.Console().ReadFrom
-         .Configuration(context.Configuration);
-});
+builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+//{
+//    loggerConfiguration
+//         .WriteTo.Console().ReadFrom
+//         .Configuration(context.Configuration);
+//});
 
 var app = builder
        .ConfigureServices()
