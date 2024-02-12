@@ -18,7 +18,7 @@ public class CreateAccountCommandValidatorTests
     {
         var domainAccount = new DomainAccount { Name = string.Empty };
         AddAccountCommand model = new AddAccountCommand(domainAccount);
-        var result = await _validator.TestValidateAsync(model);
+        var result = await _validator.TestValidateAsync(model).ConfigureAwait(true);
         result.ShouldHaveValidationErrorFor(x => x.Account.Name);
     }
 
@@ -27,7 +27,7 @@ public class CreateAccountCommandValidatorTests
     {
         var domainAccount = new DomainAccount { Id = 0 };
         AddAccountCommand model = new AddAccountCommand(domainAccount);
-        var result = await _validator.TestValidateAsync(model);
+        var result = await _validator.TestValidateAsync(model).ConfigureAwait(true);
         result.ShouldHaveValidationErrorFor(x => x.Account.Id);
     }
 

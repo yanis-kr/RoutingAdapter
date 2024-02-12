@@ -1,5 +1,4 @@
 using Microsoft.OpenApi.Models;
-using My.AppCore;
 using My.AppHandlers;
 using My.Domain;
 using My.Domain.Contracts;

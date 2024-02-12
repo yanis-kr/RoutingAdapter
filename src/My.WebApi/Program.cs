@@ -23,3 +23,6 @@ var app = builder
 app.UseSerilogRequestLogging();
 
 app.Run();
+
+//required by WebApplicationFactory in Integration Tests
+public partial class Program { }

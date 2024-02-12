@@ -47,11 +47,13 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
         {
             var account = _mapper.Map<DomainAccount, MySys1Account>(request.Account);
             await _mySys1Repo.AddAccount(account).ConfigureAwait(false);
+            await _router.AddRoute(request.Account.Id, TargetSystem.MySys1).ConfigureAwait(true);
         }
         else
         {
             var account = _mapper.Map<DomainAccount, MySys2Account>(request.Account);
             await _mySys2Repo.AddAccount(account).ConfigureAwait(false);
+            await _router.AddRoute(request.Account.Id, TargetSystem.MySys2).ConfigureAwait(true);
         }
 
         var createAccountCommandResponse = new DomainAccountResponse();
