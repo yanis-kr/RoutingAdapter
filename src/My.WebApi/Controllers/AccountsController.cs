@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using My.AppHandlers.Commands;
-using My.AppHandlers.Notifications;
-using My.AppHandlers.Queries;
+using My.Application.UseCases.Account.Commands;
+using My.Application.UseCases.Account.Notifications;
+using My.Application.UseCases.Account.Queries;
 using My.Domain.Models.Domain;
 
 namespace My.WebApi.Controllers;

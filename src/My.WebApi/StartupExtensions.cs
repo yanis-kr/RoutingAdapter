@@ -1,5 +1,4 @@
 using Microsoft.OpenApi.Models;
-using My.AppHandlers;
 using My.Domain;
 using My.Domain.Contracts;
 using My.Infrastructure.EventBus;
@@ -8,6 +7,7 @@ using My.Infrastructure.Legacy;
 using My.Infrastructure.FeatureFlags;
 using My.Infrastructure.MySysRouter;
 using My.WebApi.Middleware;
+using My.Application;
 
 namespace My.WebApi;
 

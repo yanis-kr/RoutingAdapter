@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace My.IntegrationTests.Controllers;
 public class AccountsControllerTests : IClassFixture<WebApplicationFactory<Program>>

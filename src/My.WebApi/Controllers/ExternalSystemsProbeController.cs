@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using My.AppHandlers.Queries;
+using My.Application.UseCases.Account.Queries;
 using My.Domain.Contracts;
 using My.Domain.Enums;
 

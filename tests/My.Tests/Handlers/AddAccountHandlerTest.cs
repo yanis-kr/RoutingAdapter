@@ -1,8 +1,8 @@
 using AutoMapper;
 using Moq;
-using My.AppHandlers.Commands;
-using My.AppHandlers.Exceptions;
-using My.AppHandlers.Handlers;
+using My.Application.Exceptions;
+using My.Application.UseCases.Account.Commands;
+using My.Application.UseCases.Account.Handlers;
 using My.Domain.Contracts;
 using My.Domain.Models.Domain;
 

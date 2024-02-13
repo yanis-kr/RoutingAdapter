@@ -1,6 +1,6 @@
-﻿using FluentValidation.Results;
+using FluentValidation.Results;
 
-namespace My.AppHandlers.Exceptions;
+namespace My.Application.Exceptions;
 
 public class ValidationException : Exception
 {

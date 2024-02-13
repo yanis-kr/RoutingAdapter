@@ -1,14 +1,14 @@
 using MediatR;
-using My.AppHandlers.Commands;
 using My.Domain.Contracts;
 using My.Domain.Models.Domain;
 using AutoMapper;
 using My.Domain.Enums;
 using My.Domain.Models.Legacy;
 using My.Domain.Models.Modern;
-using My.AppServices.Validators;
+using My.Application.UseCases.Account.Commands;
+using My.Application.UseCases.Account.Validators;
 
-namespace My.AppHandlers.Handlers;
+namespace My.Application.UseCases.Account.Handlers;
 
 public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccountResponse>
 {

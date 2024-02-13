@@ -1,4 +1,4 @@
-using My.AppHandlers.Exceptions;
+using My.Application.Exceptions;
 using System.Net;
 using System.Text.Json;
 
