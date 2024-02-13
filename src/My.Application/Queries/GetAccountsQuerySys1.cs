@@ -1,6 +1,6 @@
 using MediatR;
-using My.Domain.Models.MySys1;
+using My.Domain.Models.Legacy;
 
 namespace My.AppHandlers.Queries;
 
-public record GetAccountsQuerySys1() : IRequest<IEnumerable<MySys1Account>>;
+public record GetAccountsQuerySys1() : IRequest<IEnumerable<LegacyAccount>>;

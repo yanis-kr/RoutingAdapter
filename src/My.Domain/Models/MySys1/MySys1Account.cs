@@ -1,9 +1,9 @@
-namespace My.Domain.Models.MySys1;
+namespace My.Domain.Models.Legacy;
 
-public class MySys1Account
+public class LegacyAccount
 {
     public int Id { get; set; }
     public string? Name { get; set; }
 
-    public string? MySys1Field { get; set; }
+    public string? LegacyField { get; set; }
 }

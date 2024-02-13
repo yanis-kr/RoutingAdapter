@@ -1,9 +1,9 @@
-using My.Domain.Models.MySys1;
+using My.Domain.Models.Legacy;
 
 namespace My.Domain.Contracts;
-public interface IRepositoryMySys1
+public interface IRepositoryLegacy
 {
-    Task AddAccount(MySys1Account account);
-    Task<MySys1Account> GetAccountById(int id);
-    Task<IEnumerable<MySys1Account>> GetAllAccounts();
+    Task AddAccount(LegacyAccount account);
+    Task<LegacyAccount> GetAccountById(int id);
+    Task<IEnumerable<LegacyAccount>> GetAllAccounts();
 }

@@ -1,8 +1,8 @@
 using AutoMapper;
 using My.AppCore.Profiles;
 using My.Domain.Models.Domain;
-using My.Domain.Models.MySys1;
-using My.Domain.Models.MySys2;
+using My.Domain.Models.Legacy;
+using My.Domain.Models.Modern;
 
 namespace My.Tests.Profiles;
 
@@ -18,7 +18,7 @@ public class AccountProfileTests
     }
 
     [Fact]
-    public void AccountProfile_DomainAccount_To_MySys1Account_Mapping_Valid()
+    public void AccountProfile_DomainAccount_To_LegacyAccount_Mapping_Valid()
     {
         // Arrange
         var domainAccount = new DomainAccount
@@ -29,38 +29,38 @@ public class AccountProfileTests
         };
 
         // Act
-        var mySys1Account = _mapper.Map<MySys1Account>(domainAccount);
+        var legacyAccount = _mapper.Map<LegacyAccount>(domainAccount);
 
         // Assert
-        Assert.NotNull(mySys1Account); // Check that the mapping result is not null
-        Assert.Equal(domainAccount.Id, mySys1Account.Id); // Check that the Id was correctly mapped
-        Assert.Equal(domainAccount.Name, mySys1Account.Name); // Check that the Name was correctly mapped
-        Assert.Equal(domainAccount.DomainField, mySys1Account.MySys1Field); // Check that the DomainField was correctly mapped to MySys1Field
+        Assert.NotNull(legacyAccount); // Check that the mapping result is not null
+        Assert.Equal(domainAccount.Id, legacyAccount.Id); // Check that the Id was correctly mapped
+        Assert.Equal(domainAccount.Name, legacyAccount.Name); // Check that the Name was correctly mapped
+        Assert.Equal(domainAccount.DomainField, legacyAccount.LegacyField); // Check that the DomainField was correctly mapped to LegacyField
     }
 
     [Fact]
-    public void AccountProfile_MySys1Account_To_DomainAccount_Mapping_Valid()
+    public void AccountProfile_LegacyAccount_To_DomainAccount_Mapping_Valid()
     {
-        var mySys1Account = new MySys1Account
+        var legacyAccount = new LegacyAccount
         {
-            MySys1Field = "SomeValue",
+            LegacyField = "SomeValue",
             Name = "SomeName",
             Id = 1
         };
 
         // Act
-        var domainAccount = _mapper.Map<DomainAccount>(mySys1Account);
+        var domainAccount = _mapper.Map<DomainAccount>(legacyAccount);
 
         // Assert
-        Assert.Equal(mySys1Account.MySys1Field, domainAccount.DomainField);
-        Assert.Equal(mySys1Account.Name, domainAccount.Name);
-        Assert.Equal(mySys1Account.Id, domainAccount.Id);
+        Assert.Equal(legacyAccount.LegacyField, domainAccount.DomainField);
+        Assert.Equal(legacyAccount.Name, domainAccount.Name);
+        Assert.Equal(legacyAccount.Id, domainAccount.Id);
     }
 
-    // Similarly, add tests for MySys2Account and DomainAccountResponse mappings
+    // Similarly, add tests for ModernAccount and DomainAccountResponse mappings
 
     [Fact]
-    public void AccountProfile_DomainAccount_To_MySys2Account_Mapping_Valid()
+    public void AccountProfile_DomainAccount_To_ModernAccount_Mapping_Valid()
     {
         // Arrange
         var domainAccount = new DomainAccount
@@ -71,34 +71,34 @@ public class AccountProfileTests
         };
 
         // Act
-        var mySys2Account = _mapper.Map<MySys2Account>(domainAccount);
+        var modernAccount = _mapper.Map<ModernAccount>(domainAccount);
 
         // Assert
-        Assert.NotNull(mySys2Account); // Check that the mapping result is not null
-        Assert.Equal(domainAccount.Id, mySys2Account.Id); // Check that the Id was correctly mapped
-        Assert.Equal(domainAccount.Name, mySys2Account.Name); // Check that the Name was correctly mapped
-        Assert.Equal(domainAccount.DomainField, mySys2Account.MySys2Field); // Check that the DomainField was correctly mapped to MySys2Field
-        //Assert.True(domainAccount.DomainField == mySys2Account.MySys2Field, "DomainField was not correctly mapped to MySys2Field");
+        Assert.NotNull(modernAccount); // Check that the mapping result is not null
+        Assert.Equal(domainAccount.Id, modernAccount.Id); // Check that the Id was correctly mapped
+        Assert.Equal(domainAccount.Name, modernAccount.Name); // Check that the Name was correctly mapped
+        Assert.Equal(domainAccount.DomainField, modernAccount.ModernField); // Check that the DomainField was correctly mapped to ModernField
+        //Assert.True(domainAccount.DomainField == modernAccount.ModernField, "DomainField was not correctly mapped to ModernField");
     }
 
     [Fact]
-    public void AccountProfile_MySys2Account_To_DomainAccount_Mapping_Valid()
+    public void AccountProfile_ModernAccount_To_DomainAccount_Mapping_Valid()
     {
-        var mySys2Account = new MySys2Account
+        var modernAccount = new ModernAccount
         {
-            MySys2Field = "SomeValue",
+            ModernField = "SomeValue",
             Name = "SomeName",
             Id = 1
         };
 
         // Act
-        var domainAccount = _mapper.Map<DomainAccount>(mySys2Account);
+        var domainAccount = _mapper.Map<DomainAccount>(modernAccount);
 
         // Assert
-        Assert.NotNull(mySys2Account); // Check that the mapping result is not null
-        Assert.Equal(domainAccount.Id, mySys2Account.Id); // Check that the Id was correctly mapped
-        Assert.Equal(domainAccount.Name, mySys2Account.Name); // Check that the Name was correctly mapped
-        Assert.Equal(domainAccount.DomainField, mySys2Account.MySys2Field); // Check that the DomainField was correctly mapped to MySys2Field
+        Assert.NotNull(modernAccount); // Check that the mapping result is not null
+        Assert.Equal(domainAccount.Id, modernAccount.Id); // Check that the Id was correctly mapped
+        Assert.Equal(domainAccount.Name, modernAccount.Name); // Check that the Name was correctly mapped
+        Assert.Equal(domainAccount.DomainField, modernAccount.ModernField); // Check that the DomainField was correctly mapped to ModernField
 
     }
 }

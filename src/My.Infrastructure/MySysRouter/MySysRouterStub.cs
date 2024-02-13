@@ -19,20 +19,20 @@ public class MySysRouterStub : ISysRouter
         {
             if (_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
             {
-                return TargetSystem.MySys1;
+                return TargetSystem.Legacy;
             }
             else
             {
-                return TargetSystem.MySys2;
+                return TargetSystem.Modern;
             }
         }
         else if (_accountsSys1.Contains(accountId))
         {
-            return TargetSystem.MySys1;
+            return TargetSystem.Legacy;
         }
         else if (_accountsSys2.Contains(accountId))
         {
-            return TargetSystem.MySys2;
+            return TargetSystem.Modern;
         }
         else
         {
@@ -42,11 +42,11 @@ public class MySysRouterStub : ISysRouter
 
     public Task AddRoute(int accountId, TargetSystem target)
     {
-        if (target == TargetSystem.MySys1)
+        if (target == TargetSystem.Legacy)
         {
             _accountsSys1.Add(accountId);
         }
-        else if (target == TargetSystem.MySys2)
+        else if (target == TargetSystem.Modern)
         {
             _accountsSys2.Add(accountId);
         }

@@ -10,16 +10,16 @@ namespace My.Tests.Handlers;
 
 public class AddAccountHandlerTests
 {
-    private readonly Mock<IRepositoryMySys1> _mySys1RepoMock;
-    private readonly Mock<IRepositoryMySys2> _mySys2RepoMock;
+    private readonly Mock<IRepositoryLegacy> _legacyRepoMock;
+    private readonly Mock<IRepositoryModern> _modernRepoMock;
     private readonly Mock<ISysRouter> _routerMock;
     private readonly Mock<IFeatureFlag> _featureFlagMock;
     private readonly Mock<IMapper> _mapperMock;
 
     public AddAccountHandlerTests()
     {
-        _mySys1RepoMock = new Mock<IRepositoryMySys1>();
-        _mySys2RepoMock = new Mock<IRepositoryMySys2>();
+        _legacyRepoMock = new Mock<IRepositoryLegacy>();
+        _modernRepoMock = new Mock<IRepositoryModern>();
         _routerMock = new Mock<ISysRouter>();
         _featureFlagMock = new Mock<IFeatureFlag>();
         _mapperMock = new Mock<IMapper>();
@@ -41,8 +41,8 @@ public class AddAccountHandlerTests
         var cancellationToken = CancellationToken.None;
 
         var handler = new AddAccountHandler(
-            _mySys1RepoMock.Object,
-            _mySys2RepoMock.Object,
+            _legacyRepoMock.Object,
+            _modernRepoMock.Object,
             _routerMock.Object,
             _featureFlagMock.Object,
             _mapperMock.Object);
@@ -64,8 +64,8 @@ public class AddAccountHandlerTests
         var cancellationToken = CancellationToken.None;
 
         var handler = new AddAccountHandler(
-            _mySys1RepoMock.Object,
-            _mySys2RepoMock.Object,
+            _legacyRepoMock.Object,
+            _modernRepoMock.Object,
             _routerMock.Object,
             _featureFlagMock.Object,
             _mapperMock.Object);

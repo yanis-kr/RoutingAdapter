@@ -1,22 +1,22 @@
 using AutoMapper;
 using My.Domain.Models.Domain;
-using My.Domain.Models.MySys1;
-using My.Domain.Models.MySys2;
+using My.Domain.Models.Legacy;
+using My.Domain.Models.Modern;
 
 namespace My.AppCore.Profiles;
 public class AccountProfile : Profile
 {
     public AccountProfile()
     {
-        //CreateMap<DomainAccount, MySys1Account>().ReverseMap()
-        //.ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.MySys1Field));
-        CreateMap<DomainAccount, MySys1Account>()
-            .ForMember(dest => dest.MySys1Field, opt => opt.MapFrom(src => src.DomainField))
+        //CreateMap<DomainAccount, LegacyAccount>().ReverseMap()
+        //.ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.LegacyField));
+        CreateMap<DomainAccount, LegacyAccount>()
+            .ForMember(dest => dest.LegacyField, opt => opt.MapFrom(src => src.DomainField))
             .ReverseMap();
-            //.ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.MySys1Field));
+            //.ForMember(dest => dest.DomainField, opt => opt.MapFrom(src => src.LegacyField));
 
-        CreateMap<DomainAccount, MySys2Account>()
-            .ForMember(dest => dest.MySys2Field, opt => opt.MapFrom(src => src.DomainField))
+        CreateMap<DomainAccount, ModernAccount>()
+            .ForMember(dest => dest.ModernField, opt => opt.MapFrom(src => src.DomainField))
             .ReverseMap();
 
         CreateMap<DomainAccount, DomainAccountResponse>().ReverseMap();

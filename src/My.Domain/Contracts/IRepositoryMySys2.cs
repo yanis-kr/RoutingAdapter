@@ -1,9 +1,9 @@
-using My.Domain.Models.MySys2;
+using My.Domain.Models.Modern;
 
 namespace My.Domain.Contracts;
-public interface IRepositoryMySys2
+public interface IRepositoryModern
 {
-    Task AddAccount(MySys2Account account);
-    Task<MySys2Account> GetAccountById(int id);
-    Task<IEnumerable<MySys2Account>> GetAllAccounts();
+    Task AddAccount(ModernAccount account);
+    Task<ModernAccount> GetAccountById(int id);
+    Task<IEnumerable<ModernAccount>> GetAllAccounts();
 }

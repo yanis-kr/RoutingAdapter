@@ -9,19 +9,19 @@ namespace My.AppHandlers.Handlers;
 
 public class GetAccountHandler : IRequestHandler<GetAccountsQuery, IEnumerable<DomainAccount>>
 {
-    private readonly IRepositoryMySys1 _mySys1Repo;
-    private readonly IRepositoryMySys2 _mySys2Repo;
+    private readonly IRepositoryLegacy _legacyRepo;
+    private readonly IRepositoryModern _modernRepo;
     private readonly IFeatureFlag _featureFlag;
     private readonly IMapper _mapper;
 
     public GetAccountHandler(
-        IRepositoryMySys1 mySys1Repo,
-        IRepositoryMySys2 mySys2Repo,
+        IRepositoryLegacy legacyRepo,
+        IRepositoryModern modernRepo,
         IFeatureFlag featureFlag,
         IMapper mapper)
     {
-        _mySys1Repo = mySys1Repo;
-        _mySys2Repo = mySys2Repo;
+        _legacyRepo = legacyRepo;
+        _modernRepo = modernRepo;
         _featureFlag = featureFlag;
         _mapper = mapper;
     }
@@ -31,12 +31,12 @@ public class GetAccountHandler : IRequestHandler<GetAccountsQuery, IEnumerable<D
     {
         if(_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
         {
-            var accountsSys1 = await _mySys1Repo.GetAllAccounts().ConfigureAwait(false);
+            var accountsSys1 = await _legacyRepo.GetAllAccounts().ConfigureAwait(false);
             var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys1);
             return accountsDomain;
         } else
         {
-            var accountsSys2 = await _mySys2Repo.GetAllAccounts().ConfigureAwait(false);
+            var accountsSys2 = await _modernRepo.GetAllAccounts().ConfigureAwait(false);
             var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys2);
             return accountsDomain;
         }

@@ -3,8 +3,8 @@ using My.AppHandlers;
 using My.Domain;
 using My.Domain.Contracts;
 using My.Infrastructure.EventBus;
-using My.Infrastructure.MySys2;
-using My.Infrastructure.MySys1;
+using My.Infrastructure.Modern;
+using My.Infrastructure.Legacy;
 using My.Infrastructure.FeatureFlags;
 using My.Infrastructure.MySysRouter;
 using My.WebApi.Middleware;
@@ -28,8 +28,8 @@ public static class StartupExtensions
         builder.Services.AddSingleton<IEventBus, EventBusStub>();
         builder.Services.AddSingleton<ISysRouter, MySysRouterStub>();
         builder.Services.AddSingleton<IFeatureFlag, FeatureFlagsStub>();
-        builder.Services.AddSingleton<IRepositoryMySys1, RepositoryMySys1Stub>();
-        builder.Services.AddSingleton<IRepositoryMySys2, RepositoryMySys2Stub>();
+        builder.Services.AddSingleton<IRepositoryLegacy, RepositoryLegacyStub>();
+        builder.Services.AddSingleton<IRepositoryModern, RepositoryModernStub>();
 
         builder.Services.AddControllers();
 

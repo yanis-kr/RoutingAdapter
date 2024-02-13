@@ -4,29 +4,29 @@ using My.Domain.Contracts;
 using My.Domain.Models.Domain;
 using AutoMapper;
 using My.Domain.Enums;
-using My.Domain.Models.MySys1;
-using My.Domain.Models.MySys2;
+using My.Domain.Models.Legacy;
+using My.Domain.Models.Modern;
 using My.AppServices.Validators;
 
 namespace My.AppHandlers.Handlers;
 
 public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccountResponse>
 {
-    private readonly IRepositoryMySys1 _mySys1Repo;
-    private readonly IRepositoryMySys2 _mySys2Repo;
+    private readonly IRepositoryLegacy _legacyRepo;
+    private readonly IRepositoryModern _modernRepo;
     private readonly ISysRouter _router;
     private readonly IFeatureFlag _featureFlag;
     private readonly IMapper _mapper;
 
     public AddAccountHandler(
-        IRepositoryMySys1 mySys1Repo,
-        IRepositoryMySys2 mySys2Repo,
+        IRepositoryLegacy legacyRepo,
+        IRepositoryModern modernRepo,
         ISysRouter router,
         IFeatureFlag featureFlag,
         IMapper mapper)
     {
-        _mySys1Repo = mySys1Repo;
-        _mySys2Repo = mySys2Repo;
+        _legacyRepo = legacyRepo;
+        _modernRepo = modernRepo;
         _router = router;
         _featureFlag = featureFlag;
         _mapper = mapper;
@@ -45,15 +45,15 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
         var isSys1 = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1);
         if (isSys1)
         {
-            var account = _mapper.Map<DomainAccount, MySys1Account>(request.Account);
-            await _mySys1Repo.AddAccount(account).ConfigureAwait(false);
-            await _router.AddRoute(request.Account.Id, TargetSystem.MySys1).ConfigureAwait(true);
+            var account = _mapper.Map<DomainAccount, LegacyAccount>(request.Account);
+            await _legacyRepo.AddAccount(account).ConfigureAwait(false);
+            await _router.AddRoute(request.Account.Id, TargetSystem.Legacy).ConfigureAwait(true);
         }
         else
         {
-            var account = _mapper.Map<DomainAccount, MySys2Account>(request.Account);
-            await _mySys2Repo.AddAccount(account).ConfigureAwait(false);
-            await _router.AddRoute(request.Account.Id, TargetSystem.MySys2).ConfigureAwait(true);
+            var account = _mapper.Map<DomainAccount, ModernAccount>(request.Account);
+            await _modernRepo.AddAccount(account).ConfigureAwait(false);
+            await _router.AddRoute(request.Account.Id, TargetSystem.Modern).ConfigureAwait(true);
         }
 
         var createAccountCommandResponse = new DomainAccountResponse();
