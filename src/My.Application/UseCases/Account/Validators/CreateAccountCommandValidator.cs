@@ -1,7 +1,7 @@
 using FluentValidation;
-using My.AppHandlers.Commands;
+using My.Application.UseCases.Account.Commands;
 
-namespace My.AppServices.Validators;
+namespace My.Application.UseCases.Account.Validators;
 
 public class CreateAccountCommandValidator : AbstractValidator<AddAccountCommand>
 {

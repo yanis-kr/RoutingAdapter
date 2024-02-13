@@ -1,10 +1,10 @@
 using MediatR;
-using My.AppHandlers.Queries;
 using My.Domain.Contracts;
 using AutoMapper;
 using My.Domain.Models.Legacy;
+using My.Application.UseCases.Account.Queries;
 
-namespace My.AppHandlers.Handlers;
+namespace My.Application.UseCases.Account.Handlers;
 
 public class GetAccountsHandlerSys1 : IRequestHandler<GetAccountsQuerySys1, IEnumerable<LegacyAccount>>
 {
