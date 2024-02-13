@@ -20,34 +20,34 @@ public class ExternalSystemsProbeController : ControllerBase
     }
 
     [HttpGet]
-    [Route("Accounts-sys1")]
-    public async Task<ActionResult> GetAccountsSys1()
+    [Route("Accounts-legacy")]
+    public async Task<ActionResult> GetAccountsLegacy()
     {
-        var accounts = await _mediator.Send(new GetAccountsQuerySys1()).ConfigureAwait(true);
+        var accounts = await _mediator.Send(new GetAccountsQueryLegacy()).ConfigureAwait(true);
         return Ok(accounts);
     }
 
     [HttpGet]
-    [Route("Accounts-sys2")]
-    public async Task<ActionResult> GetAccountsSys2()
+    [Route("Accounts-modern")]
+    public async Task<ActionResult> GetAccountsModern()
     {
-        var accounts = await _mediator.Send(new GetAccountsQuerySys2()).ConfigureAwait(true);
+        var accounts = await _mediator.Send(new GetAccountsQueryModern()).ConfigureAwait(true);
         return Ok(accounts);
     }
 
     [HttpGet]
-    [Route("FeatureFlag-IsSys1Default")]
-    public ActionResult GetIsSys1Default()
+    [Route("FeatureFlag-IsLegacyDefault")]
+    public ActionResult GetIsLegacyDefault()
     {
-        var isSys1 = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1);
-        return Ok(isSys1);
+        var isLegacy = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemLegacy);
+        return Ok(isLegacy);
     }
 
     [HttpPost]
-    [Route("FeatureFlag-Sys1DefaultToggle")]
-    public ActionResult Sys1DefaultToggle()
+    [Route("FeatureFlag-LegacyDefaultToggle")]
+    public ActionResult LegacyDefaultToggle()
     {
-        _featureFlag.ToggleFeatureFlag(FeatureFlag.FeatureDefaultSystemSys1);
+        _featureFlag.ToggleFeatureFlag(FeatureFlag.FeatureDefaultSystemLegacy);
         return Ok();
     }
 }

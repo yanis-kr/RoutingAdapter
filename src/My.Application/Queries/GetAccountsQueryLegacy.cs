@@ -3,4 +3,4 @@ using My.Domain.Models.Legacy;
 
 namespace My.AppHandlers.Queries;
 
-public record GetAccountsQuerySys1() : IRequest<IEnumerable<LegacyAccount>>;
+public record GetAccountsQueryLegacy() : IRequest<IEnumerable<LegacyAccount>>;

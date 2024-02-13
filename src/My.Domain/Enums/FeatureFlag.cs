@@ -1,6 +1,6 @@
 namespace My.Domain.Enums;
 public enum FeatureFlag
 {
-    FeatureDefaultSystemSys1 = 1,
+    FeatureDefaultSystemLegacy = 1,
     Feature2 = 2
 }

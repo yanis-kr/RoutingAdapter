@@ -29,15 +29,15 @@ public class GetAccountHandler : IRequestHandler<GetAccountsQuery, IEnumerable<D
     public async Task<IEnumerable<DomainAccount>> Handle(GetAccountsQuery request,
         CancellationToken cancellationToken)
     {
-        if(_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
+        if(_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemLegacy))
         {
-            var accountsSys1 = await _legacyRepo.GetAllAccounts().ConfigureAwait(false);
-            var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys1);
+            var accountsLegacy = await _legacyRepo.GetAllAccounts().ConfigureAwait(false);
+            var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsLegacy);
             return accountsDomain;
         } else
         {
-            var accountsSys2 = await _modernRepo.GetAllAccounts().ConfigureAwait(false);
-            var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys2);
+            var accountsModern = await _modernRepo.GetAllAccounts().ConfigureAwait(false);
+            var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsModern);
             return accountsDomain;
         }
     }

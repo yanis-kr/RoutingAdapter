@@ -12,20 +12,20 @@ using My.Domain.Models.Modern;
 namespace My.Tests.Handlers;
 public class GetAccountByIdHandlerTests
 {
-    private readonly Mock<IRepositoryLegacy> _mockRepoSys1;
-    private readonly Mock<IRepositoryModern> _mockRepoSys2;
+    private readonly Mock<IRepositoryLegacy> _mockRepoLegacy;
+    private readonly Mock<IRepositoryModern> _mockRepoModern;
     private readonly Mock<ISysRouter> _mockSysRouter;
     private readonly IMapper _mapper;
     private readonly GetAccountByIdHandler _handler;
 
     public GetAccountByIdHandlerTests()
     {
-        _mockRepoSys1 = new Mock<IRepositoryLegacy>();
-        _mockRepoSys1.Setup(repo => repo.GetAccountById(1))
+        _mockRepoLegacy = new Mock<IRepositoryLegacy>();
+        _mockRepoLegacy.Setup(repo => repo.GetAccountById(1))
             .ReturnsAsync(new LegacyAccount { Id = 1, Name = "Test Account1" });
 
-        _mockRepoSys2 = new Mock<IRepositoryModern>();
-        _mockRepoSys2.Setup(repo => repo.GetAccountById(2))
+        _mockRepoModern = new Mock<IRepositoryModern>();
+        _mockRepoModern.Setup(repo => repo.GetAccountById(2))
             .ReturnsAsync(new ModernAccount { Id = 2, Name = "Test Account2" });
 
         _mockSysRouter = new Mock<ISysRouter>();
@@ -36,7 +36,7 @@ public class GetAccountByIdHandlerTests
             cfg.AddProfile<AccountProfile>());
         _mapper = configuration.CreateMapper();
 
-        _handler = new GetAccountByIdHandler(_mockRepoSys1.Object, _mockRepoSys2.Object, _mockSysRouter.Object, _mapper); // Update this
+        _handler = new GetAccountByIdHandler(_mockRepoLegacy.Object, _mockRepoModern.Object, _mockSysRouter.Object, _mapper); // Update this
     }
 
     [Fact]

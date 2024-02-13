@@ -6,12 +6,12 @@ using My.Domain.Models.Modern;
 
 namespace My.AppHandlers.Handlers;
 
-public class GetAccountsHandlerSys2 : IRequestHandler<GetAccountsQuerySys2, IEnumerable<ModernAccount>>
+public class GetAccountsHandlerModern : IRequestHandler<GetAccountsQueryModern, IEnumerable<ModernAccount>>
 {
     private readonly IRepositoryModern _modernRepo;
     private readonly IMapper _mapper;
 
-    public GetAccountsHandlerSys2(
+    public GetAccountsHandlerModern(
         IRepositoryModern modernRepo,
         IMapper mapper)
     {
@@ -19,12 +19,12 @@ public class GetAccountsHandlerSys2 : IRequestHandler<GetAccountsQuerySys2, IEnu
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ModernAccount>> Handle(GetAccountsQuerySys2 request,
+    public async Task<IEnumerable<ModernAccount>> Handle(GetAccountsQueryModern request,
         CancellationToken cancellationToken)
     {
-        var accountsSys2 = await _modernRepo.GetAllAccounts().ConfigureAwait(false);
-        //var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys2);
-        return accountsSys2;
+        var accountsModern = await _modernRepo.GetAllAccounts().ConfigureAwait(false);
+        //var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsModern);
+        return accountsModern;
     }
 
 }

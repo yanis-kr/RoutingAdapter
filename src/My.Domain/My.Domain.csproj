@@ -1,18 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Models\Sys1\**" />
-    <Compile Remove="Models\Sys2\**" />
-    <EmbeddedResource Remove="Models\Sys1\**" />
-    <EmbeddedResource Remove="Models\Sys2\**" />
-    <None Remove="Models\Sys1\**" />
-    <None Remove="Models\Sys2\**" />
-  </ItemGroup>
 
 </Project>

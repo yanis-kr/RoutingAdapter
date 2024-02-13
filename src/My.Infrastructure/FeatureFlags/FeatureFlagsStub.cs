@@ -6,7 +6,7 @@ namespace My.Infrastructure.FeatureFlags;
 public class FeatureFlagsStub : IFeatureFlag
 {
     private readonly ILogger<FeatureFlagsStub> _logger;
-    private bool _featureDefaultSystemSys1 = true;
+    private bool _featureDefaultSystemLegacy = true;
     public FeatureFlagsStub(ILogger<FeatureFlagsStub> logger)
     {
         _logger = logger;
@@ -15,9 +15,9 @@ public class FeatureFlagsStub : IFeatureFlag
     {
         switch (featureName)
         {
-            case FeatureFlag.FeatureDefaultSystemSys1:
-                _logger.LogInformation($"Current _featureDefaultSystemSys1 = {_featureDefaultSystemSys1}");
-                return _featureDefaultSystemSys1;
+            case FeatureFlag.FeatureDefaultSystemLegacy:
+                _logger.LogInformation($"Current _featureDefaultSystemLegacy = {_featureDefaultSystemLegacy}");
+                return _featureDefaultSystemLegacy;
             default:
                 return false;
         }
@@ -27,9 +27,9 @@ public class FeatureFlagsStub : IFeatureFlag
     {
         switch (featureName)
         {
-            case FeatureFlag.FeatureDefaultSystemSys1:
-                _featureDefaultSystemSys1 = !_featureDefaultSystemSys1;
-                _logger.LogWarning($"Switching _featureDefaultSystemSys1 = {_featureDefaultSystemSys1}");
+            case FeatureFlag.FeatureDefaultSystemLegacy:
+                _featureDefaultSystemLegacy = !_featureDefaultSystemLegacy;
+                _logger.LogWarning($"Switching _featureDefaultSystemLegacy = {_featureDefaultSystemLegacy}");
                 break;
         }
     }

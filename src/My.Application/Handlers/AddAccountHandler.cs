@@ -42,8 +42,8 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
             throw new Exceptions.ValidationException(validationResult);
         }
 
-        var isSys1 = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1);
-        if (isSys1)
+        var isLegacy = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemLegacy);
+        if (isLegacy)
         {
             var account = _mapper.Map<DomainAccount, LegacyAccount>(request.Account);
             await _legacyRepo.AddAccount(account).ConfigureAwait(false);

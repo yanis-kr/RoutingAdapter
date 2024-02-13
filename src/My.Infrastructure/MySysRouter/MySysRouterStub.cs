@@ -4,8 +4,8 @@ using My.Domain.Enums;
 namespace My.Infrastructure.MySysRouter;
 public class MySysRouterStub : ISysRouter
 {
-    private readonly List<int> _accountsSys1 = new List<int> { 1, 3 };
-    private readonly List<int> _accountsSys2 = new List<int> { 2, 3 };
+    private readonly List<int> _accountsLegacy = new List<int> { 1, 3 };
+    private readonly List<int> _accountsModern = new List<int> { 2, 3 };
     private readonly IFeatureFlag _featureFlag;
 
     public MySysRouterStub(IFeatureFlag featureFlag)
@@ -15,9 +15,9 @@ public class MySysRouterStub : ISysRouter
 
     public TargetSystem GetRoute(int accountId)
     {
-        if (_accountsSys1.Contains(accountId) && _accountsSys2.Contains(accountId))
+        if (_accountsLegacy.Contains(accountId) && _accountsModern.Contains(accountId))
         {
-            if (_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
+            if (_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemLegacy))
             {
                 return TargetSystem.Legacy;
             }
@@ -26,11 +26,11 @@ public class MySysRouterStub : ISysRouter
                 return TargetSystem.Modern;
             }
         }
-        else if (_accountsSys1.Contains(accountId))
+        else if (_accountsLegacy.Contains(accountId))
         {
             return TargetSystem.Legacy;
         }
-        else if (_accountsSys2.Contains(accountId))
+        else if (_accountsModern.Contains(accountId))
         {
             return TargetSystem.Modern;
         }
@@ -44,11 +44,11 @@ public class MySysRouterStub : ISysRouter
     {
         if (target == TargetSystem.Legacy)
         {
-            _accountsSys1.Add(accountId);
+            _accountsLegacy.Add(accountId);
         }
         else if (target == TargetSystem.Modern)
         {
-            _accountsSys2.Add(accountId);
+            _accountsModern.Add(accountId);
         }
         else
         {

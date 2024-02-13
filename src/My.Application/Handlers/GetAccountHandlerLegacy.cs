@@ -6,12 +6,12 @@ using My.Domain.Models.Legacy;
 
 namespace My.AppHandlers.Handlers;
 
-public class GetAccountsHandlerSys1 : IRequestHandler<GetAccountsQuerySys1, IEnumerable<LegacyAccount>>
+public class GetAccountsHandlerLegacy : IRequestHandler<GetAccountsQueryLegacy, IEnumerable<LegacyAccount>>
 {
     private readonly IRepositoryLegacy _legacyRepo;
     private readonly IMapper _mapper;
 
-    public GetAccountsHandlerSys1(
+    public GetAccountsHandlerLegacy(
         IRepositoryLegacy legacyRepo,
         IMapper mapper)
     {
@@ -19,12 +19,12 @@ public class GetAccountsHandlerSys1 : IRequestHandler<GetAccountsQuerySys1, IEnu
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<LegacyAccount>> Handle(GetAccountsQuerySys1 request,
+    public async Task<IEnumerable<LegacyAccount>> Handle(GetAccountsQueryLegacy request,
         CancellationToken cancellationToken)
     {
-        var accountsSys1 = await _legacyRepo.GetAllAccounts().ConfigureAwait(false);
-        //var accountsDomain = _mapper.Map<IEnumerable<LegacyAccount>>(accountsSys1);
-        return accountsSys1;
+        var accountsLegacy = await _legacyRepo.GetAllAccounts().ConfigureAwait(false);
+        //var accountsDomain = _mapper.Map<IEnumerable<LegacyAccount>>(accountsLegacy);
+        return accountsLegacy;
     }
 
 }
