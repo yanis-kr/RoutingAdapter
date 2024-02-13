@@ -1,5 +1,5 @@
 ﻿using MediatR;
 using My.Domain.Models.Domain;
 
-namespace My.Application.UseCases.Account.Notifications;
+namespace My.AppHandlers.Notifications;
 public record AccountAddedNotification(DomainAccount Account) : INotification;

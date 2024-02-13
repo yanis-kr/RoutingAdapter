@@ -1,13 +1,13 @@
 using MediatR;
+using My.AppHandlers.Queries;
 using My.Domain.Contracts;
 using My.Domain.Enums;
 using My.Domain.Models.Domain;
 using My.Domain.Models.Legacy;
 using AutoMapper;
 using My.Domain.Models.Modern;
-using My.Application.UseCases.Account.Queries;
 
-namespace My.Application.UseCases.Account.Handlers;
+namespace My.AppHandlers.Handlers;
 
 public class GetAccountByIdHandler : IRequestHandler<GetAccountByIdQuery, DomainAccount>
 {
@@ -26,19 +26,19 @@ public class GetAccountByIdHandler : IRequestHandler<GetAccountByIdQuery, Domain
         _modernRepo = modernRepo;
         _router = router;
         _mapper = mapper;
-    }
+    } 
 
     public async Task<DomainAccount> Handle(GetAccountByIdQuery request, CancellationToken cancellationToken)
     {
-        var system = _router.GetRoute(request.Id);
+        TargetSystem system = _router.GetRoute(request.Id);
         if (system == TargetSystem.Legacy)
         {
-            var account = await _legacyRepo.GetAccountById(request.Id).ConfigureAwait(false);
+            LegacyAccount account = await _legacyRepo.GetAccountById(request.Id).ConfigureAwait(false);
             return _mapper.Map<DomainAccount>(account);
         }
         else
         {
-            var account = await _modernRepo.GetAccountById(request.Id).ConfigureAwait(false);
+            ModernAccount account = await _modernRepo.GetAccountById(request.Id).ConfigureAwait(false);
             return _mapper.Map<DomainAccount>(account);
         }
     }

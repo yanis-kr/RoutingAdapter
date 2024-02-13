@@ -1,6 +1,6 @@
 using FluentValidation.TestHelper;
-using My.Application.UseCases.Account.Commands;
-using My.Application.UseCases.Account.Validators;
+using My.AppHandlers.Commands;
+using My.AppServices.Validators;
 using My.Domain.Models.Domain;
 
 namespace My.Tests.Validators;

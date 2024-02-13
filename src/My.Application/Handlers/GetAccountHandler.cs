@@ -1,11 +1,11 @@
 using MediatR;
+using My.AppHandlers.Queries;
 using My.Domain.Contracts;
 using AutoMapper;
 using My.Domain.Models.Domain;
 using My.Domain.Enums;
-using My.Application.UseCases.Account.Queries;
 
-namespace My.Application.UseCases.Account.Handlers;
+namespace My.AppHandlers.Handlers;
 
 public class GetAccountHandler : IRequestHandler<GetAccountsQuery, IEnumerable<DomainAccount>>
 {
@@ -29,13 +29,12 @@ public class GetAccountHandler : IRequestHandler<GetAccountsQuery, IEnumerable<D
     public async Task<IEnumerable<DomainAccount>> Handle(GetAccountsQuery request,
         CancellationToken cancellationToken)
     {
-        if (_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
+        if(_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemSys1))
         {
             var accountsSys1 = await _legacyRepo.GetAllAccounts().ConfigureAwait(false);
             var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys1);
             return accountsDomain;
-        }
-        else
+        } else
         {
             var accountsSys2 = await _modernRepo.GetAllAccounts().ConfigureAwait(false);
             var accountsDomain = _mapper.Map<IEnumerable<DomainAccount>>(accountsSys2);

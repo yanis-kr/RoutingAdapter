@@ -1,6 +1,6 @@
 using MediatR;
 using My.Domain.Models.Domain;
 
-namespace My.Application.UseCases.Account.Queries;
+namespace My.AppHandlers.Queries;
 
 public record GetAccountsQuery() : IRequest<IEnumerable<DomainAccount>>;

@@ -1,6 +1,6 @@
 using MediatR;
 using My.Domain.Models.Domain;
 
-namespace My.Application.UseCases.Account.Commands;
+namespace My.AppHandlers.Commands;
 
 public record AddAccountCommand(DomainAccount Account) : IRequest<DomainAccountResponse>;

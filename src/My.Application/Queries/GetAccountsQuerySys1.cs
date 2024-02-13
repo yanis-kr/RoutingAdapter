@@ -1,6 +1,6 @@
 using MediatR;
 using My.Domain.Models.Legacy;
 
-namespace My.Application.UseCases.Account.Queries;
+namespace My.AppHandlers.Queries;
 
 public record GetAccountsQuerySys1() : IRequest<IEnumerable<LegacyAccount>>;

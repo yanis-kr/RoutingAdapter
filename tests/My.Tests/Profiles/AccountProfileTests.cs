@@ -1,5 +1,5 @@
 using AutoMapper;
-using My.Application.UseCases.Account.Profiles;
+using My.AppCore.Profiles;
 using My.Domain.Models.Domain;
 using My.Domain.Models.Legacy;
 using My.Domain.Models.Modern;
