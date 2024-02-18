@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8E8D2ABA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.Tests", "tests\My.Tests\My.Tests.csproj", "{8321C203-FF57-4B22-96AE-EA30D8A6A4DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My.IntegrationTests", "tests\My.IntegrationTests\My.IntegrationTests.csproj", "{6E49F34A-71FE-490F-A014-A044259B6614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.IntegrationTests", "tests\My.IntegrationTests\My.IntegrationTests.csproj", "{6E49F34A-71FE-490F-A014-A044259B6614}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

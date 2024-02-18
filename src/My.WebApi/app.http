@@ -1,0 +1,22 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+@hostname=localhost
+@port=5001
+@host={{hostname}}:{{port}}
+
+GET https://{{host}}/api/accounts
+
+###
+GET https://{{host}}/api/accounts/1
+X-Customer-Id: "1"
+X-Session-Id:"2"
+X-Correlation-Id:"PresetCorrelationId"
+
+###
+POST https://{{host}}/api/accounts
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "John Doe"
+}

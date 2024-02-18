@@ -7,11 +7,13 @@ using My.Domain.Models.Legacy;
 using My.Domain.Models.Modern;
 using My.Application.UseCases.Account.Commands;
 using My.Application.UseCases.Account.Validators;
+using Microsoft.Extensions.Logging;
 
 namespace My.Application.UseCases.Account.Handlers;
 
 public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccountResponse>
 {
+    private readonly ILogger<AddAccountHandler> _logger;
     private readonly IRepositoryLegacy _legacyRepo;
     private readonly IRepositoryModern _modernRepo;
     private readonly ISysRouter _router;
@@ -19,12 +21,14 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
     private readonly IMapper _mapper;
 
     public AddAccountHandler(
+        ILogger<AddAccountHandler> logger,
         IRepositoryLegacy legacyRepo,
         IRepositoryModern modernRepo,
         ISysRouter router,
         IFeatureFlag featureFlag,
         IMapper mapper)
     {
+        _logger = logger;
         _legacyRepo = legacyRepo;
         _modernRepo = modernRepo;
         _router = router;
@@ -34,6 +38,7 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
 
     public async Task<DomainAccountResponse> Handle(AddAccountCommand request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("AddAccountCommand received: {Account}", request.Account);
         var validator = new CreateAccountCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken).ConfigureAwait(true);
 

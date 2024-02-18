@@ -36,6 +36,7 @@ public class ExceptionHandlerMiddleware
         switch (exception)
         {
             case ValidationException validationException:
+
                 httpStatusCode = HttpStatusCode.BadRequest;
                 result = JsonSerializer.Serialize(validationException.ValdationErrors);
                 break;

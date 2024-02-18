@@ -1,22 +1,45 @@
+using CorrelationId;
+using CorrelationId.DependencyInjection;
+using Elastic.CommonSchema.Serilog;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using My.Application;
 using My.Domain;
 using My.Domain.Contracts;
 using My.Infrastructure.EventBus;
-using My.Infrastructure.Modern;
-using My.Infrastructure.Legacy;
 using My.Infrastructure.FeatureFlags;
+using My.Infrastructure.Legacy;
+using My.Infrastructure.Modern;
 using My.Infrastructure.MySysRouter;
 using My.WebApi.Middleware;
-using My.Application;
+using Serilog;
+using Serilog.Events;
 
 namespace My.WebApi;
 
 public static class StartupExtensions
 {
     //add services to the DI container
-    public static WebApplication ConfigureServices(
-    this WebApplicationBuilder builder)
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Host.UseSerilog((context, loggerConfiguration) =>
+        {
+            loggerConfiguration
+                .ReadFrom.Configuration(context.Configuration)
+                .MinimumLevel.Override("CorrelationId", LogEventLevel.Error)
+                .Enrich.FromLogContext()
+                .WriteTo.Console(new EcsTextFormatter());
+        });
+
+        builder.Services.AddDefaultCorrelationId(options =>
+        {
+            options.AddToLoggingScope = true;
+            options.CorrelationIdGenerator = () => Guid.NewGuid().ToString();
+
+            options.IncludeInResponse = true;
+            options.RequestHeader = "X-Correlation-Id";
+        });
+
         //mediatR registrations
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyDomainServiceActivator).Assembly));
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyApplicationServiceActivator).Assembly));
@@ -47,6 +70,8 @@ public static class StartupExtensions
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
 
+        app.UseCorrelationId();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -60,12 +85,14 @@ public static class StartupExtensions
         //app.UseRouting();
 
         //app.UseAuthentication();
-
-        app.UseCustomExceptionHandler();
+        app.UseMiddleware<ExceptionHandlerMiddleware>();
+        app.UseMiddleware<RequestLoggingMiddleware>();
 
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.UseSerilogRequestLogging();
 
         return app;
 

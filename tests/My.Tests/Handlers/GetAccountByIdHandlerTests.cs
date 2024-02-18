@@ -1,7 +1,7 @@
 using AutoMapper;
 using Moq;
+using My.Application.Profiles;
 using My.Application.UseCases.Account.Handlers;
-using My.Application.UseCases.Account.Profiles;
 using My.Application.UseCases.Account.Queries;
 using My.Domain.Contracts;
 using My.Domain.Enums;

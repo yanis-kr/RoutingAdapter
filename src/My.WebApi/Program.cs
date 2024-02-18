@@ -1,26 +1,19 @@
-using Serilog;
 using My.WebApi;
+using Serilog;
 
+//set pre-startup logging
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console(formatProvider: System.Globalization.CultureInfo.InvariantCulture)
-    .CreateBootstrapLogger();
-
+    .CreateLogger();
 Log.Information("My API is starting");
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
-//{
-//    loggerConfiguration
-//         .WriteTo.Console().ReadFrom
-//         .Configuration(context.Configuration);
-//});
 
 var app = builder
        .ConfigureServices()
        .ConfigurePipeline();
 
-app.UseSerilogRequestLogging();
+
 
 app.Run();
 

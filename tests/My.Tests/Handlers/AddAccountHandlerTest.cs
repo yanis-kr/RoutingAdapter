@@ -1,10 +1,12 @@
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Moq;
 using My.Application.Exceptions;
 using My.Application.UseCases.Account.Commands;
 using My.Application.UseCases.Account.Handlers;
 using My.Domain.Contracts;
 using My.Domain.Models.Domain;
+using Xunit.Abstractions;
 
 namespace My.Tests.Handlers;
 
@@ -15,14 +17,18 @@ public class AddAccountHandlerTests
     private readonly Mock<ISysRouter> _routerMock;
     private readonly Mock<IFeatureFlag> _featureFlagMock;
     private readonly Mock<IMapper> _mapperMock;
+    private readonly ILogger<AddAccountHandler> _logger;
+    private readonly ITestOutputHelper _output;
 
-    public AddAccountHandlerTests()
+    public AddAccountHandlerTests(ITestOutputHelper output)
     {
+        _logger = new Mock<ILogger<AddAccountHandler>>().Object;
         _legacyRepoMock = new Mock<IRepositoryLegacy>();
         _modernRepoMock = new Mock<IRepositoryModern>();
         _routerMock = new Mock<ISysRouter>();
         _featureFlagMock = new Mock<IFeatureFlag>();
         _mapperMock = new Mock<IMapper>();
+        _output = output;
     }
 
     [Theory]
@@ -41,6 +47,7 @@ public class AddAccountHandlerTests
         var cancellationToken = CancellationToken.None;
 
         var handler = new AddAccountHandler(
+            _logger,
             _legacyRepoMock.Object,
             _modernRepoMock.Object,
             _routerMock.Object,
@@ -53,6 +60,7 @@ public class AddAccountHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.IsType<DomainAccountResponse>(result);
+        _output.WriteLine("AddAccountCommand received: {0}", request.Account.Name);
     }
 
     [Fact]
@@ -64,6 +72,7 @@ public class AddAccountHandlerTests
         var cancellationToken = CancellationToken.None;
 
         var handler = new AddAccountHandler(
+            _logger,
             _legacyRepoMock.Object,
             _modernRepoMock.Object,
             _routerMock.Object,

@@ -3,7 +3,7 @@ using My.Domain.Models.Domain;
 using My.Domain.Models.Legacy;
 using My.Domain.Models.Modern;
 
-namespace My.Application.UseCases.Account.Profiles;
+namespace My.Application.Profiles;
 public class AccountProfile : Profile
 {
     public AccountProfile()
