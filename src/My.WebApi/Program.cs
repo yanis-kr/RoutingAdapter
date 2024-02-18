@@ -13,8 +13,6 @@ var app = builder
        .ConfigureServices()
        .ConfigurePipeline();
 
-
-
 app.Run();
 
 //required by WebApplicationFactory in Integration Tests

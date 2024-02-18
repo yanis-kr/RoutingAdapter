@@ -2,9 +2,8 @@ using MediatR;
 using My.Domain.Contracts;
 using AutoMapper;
 using My.Domain.Models.Modern;
-using My.Application.UseCases.Account.Queries;
 
-namespace My.Application.UseCases.Account.Handlers;
+namespace My.Application.UseCases.GetAccounts;
 
 public class GetAccountsHandlerModern : IRequestHandler<GetAccountsQueryModern, IEnumerable<ModernAccount>>
 {

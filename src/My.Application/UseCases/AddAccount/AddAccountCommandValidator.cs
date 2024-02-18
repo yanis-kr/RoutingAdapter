@@ -1,11 +1,10 @@
 using FluentValidation;
-using My.Application.UseCases.Account.Commands;
 
-namespace My.Application.UseCases.Account.Validators;
+namespace My.Application.UseCases.AddAccount;
 
-public class CreateAccountCommandValidator : AbstractValidator<AddAccountCommand>
+public class AddAccountCommandValidator : AbstractValidator<AddAccountCommand>
 {
-    public CreateAccountCommandValidator()
+    public AddAccountCommandValidator()
     {
         RuleFor(n => n.Account.Name)
             .NotEmpty().WithMessage("{PropertyName} is required.")

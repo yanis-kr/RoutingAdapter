@@ -1,7 +1,6 @@
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using My.Application;
 using My.Domain;

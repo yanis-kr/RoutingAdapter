@@ -3,18 +3,17 @@ using My.Domain.Contracts;
 using AutoMapper;
 using My.Domain.Models.Domain;
 using My.Domain.Enums;
-using My.Application.UseCases.Account.Queries;
 
-namespace My.Application.UseCases.Account.Handlers;
+namespace My.Application.UseCases.GetAccounts;
 
-public class GetAccountHandler : IRequestHandler<GetAccountsQuery, IEnumerable<DomainAccount>>
+public class GetAccountsHandler : IRequestHandler<GetAccountsQuery, IEnumerable<DomainAccount>>
 {
     private readonly IRepositoryLegacy _legacyRepo;
     private readonly IRepositoryModern _modernRepo;
     private readonly IFeatureFlag _featureFlag;
     private readonly IMapper _mapper;
 
-    public GetAccountHandler(
+    public GetAccountsHandler(
         IRepositoryLegacy legacyRepo,
         IRepositoryModern modernRepo,
         IFeatureFlag featureFlag,

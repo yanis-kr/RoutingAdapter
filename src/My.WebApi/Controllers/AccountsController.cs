@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using My.Application.UseCases.Account.Commands;
-using My.Application.UseCases.Account.Notifications;
-using My.Application.UseCases.Account.Queries;
+using My.Application.UseCases.AddAccount;
+using My.Application.UseCases.GetAccountById;
+using My.Application.UseCases.GetAccounts;
 using My.Domain.Models.Domain;
 
 namespace My.WebApi.Controllers;
@@ -36,7 +36,7 @@ public class AccountsController : ControllerBase
     {
         var result = await _mediator.Send(new AddAccountCommand(account)).ConfigureAwait(true);
 
-        await _mediator.Publish(new AccountAddedNotification(result.Account)).ConfigureAwait(true);
+        await _mediator.Publish(new AddAccountAddedNotification(result.Account)).ConfigureAwait(true);
 
         //return CreatedAtRoute("GetAccountById", new { id = result.Id }, result);
         return Ok(result);

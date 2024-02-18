@@ -1,15 +1,13 @@
-using MediatR;
-using My.Domain.Contracts;
-using My.Domain.Models.Domain;
 using AutoMapper;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using My.Domain.Contracts;
 using My.Domain.Enums;
+using My.Domain.Models.Domain;
 using My.Domain.Models.Legacy;
 using My.Domain.Models.Modern;
-using My.Application.UseCases.Account.Commands;
-using My.Application.UseCases.Account.Validators;
-using Microsoft.Extensions.Logging;
 
-namespace My.Application.UseCases.Account.Handlers;
+namespace My.Application.UseCases.AddAccount;
 
 public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccountResponse>
 {
@@ -39,7 +37,7 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
     public async Task<DomainAccountResponse> Handle(AddAccountCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("AddAccountCommand received: {Account}", request.Account);
-        var validator = new CreateAccountCommandValidator();
+        var validator = new AddAccountCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken).ConfigureAwait(true);
 
         if (validationResult.Errors.Count > 0)

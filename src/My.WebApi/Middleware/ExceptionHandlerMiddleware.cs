@@ -42,13 +42,13 @@ public class ExceptionHandlerMiddleware
                 break;
             case BadRequestException badRequestException:
                 httpStatusCode = HttpStatusCode.BadRequest;
-                result = badRequestException.Message;
+                //result = badRequestException.Message;
                 break;
             case NotFoundException:
                 httpStatusCode = HttpStatusCode.NotFound;
                 break;
             case Exception:
-                httpStatusCode = HttpStatusCode.BadRequest;
+                httpStatusCode = HttpStatusCode.InternalServerError;
                 break;
         }
 

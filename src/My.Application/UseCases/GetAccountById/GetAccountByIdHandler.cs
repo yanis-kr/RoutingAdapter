@@ -3,9 +3,8 @@ using My.Domain.Contracts;
 using My.Domain.Enums;
 using My.Domain.Models.Domain;
 using AutoMapper;
-using My.Application.UseCases.Account.Queries;
 
-namespace My.Application.UseCases.Account.Handlers;
+namespace My.Application.UseCases.GetAccountById;
 
 public class GetAccountByIdHandler : IRequestHandler<GetAccountByIdQuery, DomainAccount>
 {

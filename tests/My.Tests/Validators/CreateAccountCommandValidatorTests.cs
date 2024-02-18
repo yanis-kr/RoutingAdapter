@@ -1,16 +1,15 @@
 using FluentValidation.TestHelper;
-using My.Application.UseCases.Account.Commands;
-using My.Application.UseCases.Account.Validators;
+using My.Application.UseCases.AddAccount;
 using My.Domain.Models.Domain;
 
 namespace My.Tests.Validators;
 public class CreateAccountCommandValidatorTests
 {
-    private readonly CreateAccountCommandValidator _validator;
+    private readonly AddAccountCommandValidator _validator;
 
     public CreateAccountCommandValidatorTests()
     {
-        _validator = new CreateAccountCommandValidator();
+        _validator = new AddAccountCommandValidator();
     }
 
     [Fact]
