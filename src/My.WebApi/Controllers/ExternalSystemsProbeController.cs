@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using My.Application.UseCases.GetAccounts;
+using My.Application.UseCases.RouteGet;
 using My.Domain.Contracts;
 using My.Domain.Enums;
 
@@ -50,4 +51,13 @@ public class ExternalSystemsProbeController : ControllerBase
         _featureFlag.ToggleFeatureFlag(FeatureFlag.FeatureDefaultSystemLegacy);
         return Ok();
     }
+
+    [HttpGet]
+    [Route("Routes/{id}")]
+    public async Task<ActionResult> GetRouteById(int id)
+    {
+        var route = await _mediator.Send(new GetRouteByIdQuery(id)).ConfigureAwait(true);
+        return Ok(route);
+    }
 }
+

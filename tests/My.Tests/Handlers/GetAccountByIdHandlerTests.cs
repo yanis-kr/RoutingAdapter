@@ -28,8 +28,8 @@ public class GetAccountByIdHandlerTests
             .ReturnsAsync(new ModernAccount { Id = 2, Name = "Test Account2" });
 
         _mockSysRouter = new Mock<ISysRouter>();
-        _mockSysRouter.Setup(router => router.GetRoute(1)).Returns(TargetSystem.Legacy);
-        _mockSysRouter.Setup(router => router.GetRoute(2)).Returns(TargetSystem.Modern);
+        _mockSysRouter.Setup(router => router.GetRoute(1)).ReturnsAsync(TargetSystem.Legacy);
+        _mockSysRouter.Setup(router => router.GetRoute(2)).ReturnsAsync(TargetSystem.Modern);
 
         var configuration = new MapperConfiguration(cfg =>
             cfg.AddProfile<AccountProfile>());

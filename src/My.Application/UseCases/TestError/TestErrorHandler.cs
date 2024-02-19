@@ -4,7 +4,7 @@ using My.Application.Exceptions;
 using FluentValidation.Results;
 using FluentValidation;
 
-namespace My.WebApi.Controllers;
+namespace My.Application.UseCases.TestError;
 
 public class TestErrorHandler : IRequestHandler<TestErrorQuery, string>
 {
@@ -27,13 +27,13 @@ public class TestErrorHandler : IRequestHandler<TestErrorQuery, string>
                 throw new Exception("Error 500 - Internal Server Exception");
             case 404:
                 _logger.LogError(result);
-                throw new NotFoundException(result); 
+                throw new NotFoundException(result);
             case 422:
                 _logger.LogError(result);
-                ValidationResult validationResult = new ValidationResult();
+                var validationResult = new ValidationResult();
                 validationResult.Errors.Add(new ValidationFailure("fail1", "Validation failure 1"));
                 validationResult.Errors.Add(new ValidationFailure("fail2", "Validation failure 2"));
-                ValidationException validationException = new ValidationException(validationResult.Errors);
+                var validationException = new ValidationException(validationResult.Errors);
 
                 throw validationException;
 

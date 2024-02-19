@@ -13,26 +13,26 @@ public class MySysRouterStub : ISysRouter
         _featureFlag = featureFlag;
     }
 
-    public TargetSystem GetRoute(int accountId)
+    public Task<TargetSystem> GetRoute(int accountId)
     {
         if (_accountsLegacy.Contains(accountId) && _accountsModern.Contains(accountId))
         {
             if (_featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemLegacy))
             {
-                return TargetSystem.Legacy;
+                return Task.FromResult(TargetSystem.Legacy);
             }
             else
             {
-                return TargetSystem.Modern;
+                return Task.FromResult(TargetSystem.Modern);
             }
         }
         else if (_accountsLegacy.Contains(accountId))
         {
-            return TargetSystem.Legacy;
+            return Task.FromResult(TargetSystem.Legacy);
         }
         else if (_accountsModern.Contains(accountId))
         {
-            return TargetSystem.Modern;
+            return Task.FromResult(TargetSystem.Modern);
         }
         else
         {

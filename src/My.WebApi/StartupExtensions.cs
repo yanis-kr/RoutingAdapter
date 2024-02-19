@@ -1,4 +1,3 @@
-using System.Runtime;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
@@ -53,10 +52,12 @@ public static class StartupExtensions
 
         //all singletons until we have a real implementation
         builder.Services.AddSingleton<IEventBus, EventBusStub>();
-        builder.Services.AddSingleton<ISysRouter, MySysRouterStub>();
+        //builder.Services.AddSingleton<ISysRouter, MySysRouterStub>();
         builder.Services.AddSingleton<IFeatureFlag, FeatureFlagsStub>();
         builder.Services.AddSingleton<IRepositoryLegacy, RepositoryLegacyStub>();
         builder.Services.AddSingleton<IRepositoryModern, RepositoryModernStub>();
+        //add typed http client
+        builder.Services.AddHttpClient<ISysRouter, MySysRouterHttpStub>();
 
         builder.Services.Configure<CustomLogging>(builder.Configuration.GetSection("CustomLogging"));
 
@@ -119,7 +120,7 @@ public static class StartupExtensions
             options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
 
             // This will map HttpRequestException to the 503 Service Unavailable status code.
-            options.MapToStatusCode<HttpRequestException>(StatusCodes.Status503ServiceUnavailable);
+            //options.MapToStatusCode<HttpRequestException>(StatusCodes.Status503ServiceUnavailable);
 
             // Because exceptions are handled polymorphically, this will act as a "catch all" mapping, which is why it's added last.
             // If an exception other than NotImplementedException and HttpRequestException is thrown, this will handle it.

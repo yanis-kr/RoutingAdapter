@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace My.WebApi.Controllers;
+namespace My.Application.UseCases.TestError;
 
 public class TestErrorQuery : IRequest<string>
 {

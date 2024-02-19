@@ -19,4 +19,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\My.Domain\My.Domain.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="UseCases\RouteAdd\" />
+	</ItemGroup>
 </Project>

@@ -27,7 +27,7 @@ public class GetAccountByIdHandler : IRequestHandler<GetAccountByIdQuery, Domain
 
     public async Task<DomainAccount> Handle(GetAccountByIdQuery request, CancellationToken cancellationToken)
     {
-        var system = _router.GetRoute(request.Id);
+        var system = await _router.GetRoute(request.Id).ConfigureAwait(true);
         if (system == TargetSystem.Legacy)
         {
             var account = await _legacyRepo.GetAccountById(request.Id).ConfigureAwait(false);
