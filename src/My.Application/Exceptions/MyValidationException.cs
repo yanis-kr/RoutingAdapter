@@ -2,11 +2,11 @@ using FluentValidation.Results;
 
 namespace My.Application.Exceptions;
 
-public class ValidationException : Exception
+public class MyValidationException : Exception
 {
     public List<string> ValdationErrors { get; set; }
 
-    public ValidationException(ValidationResult validationResult)
+    public MyValidationException(ValidationResult validationResult)
     {
         ValdationErrors = new List<string>();
 

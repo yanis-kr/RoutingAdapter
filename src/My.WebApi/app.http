@@ -20,3 +20,16 @@ Content-Type: application/json
   "id": 1,
   "name": "John Doe"
 }
+###
+GET https://{{host}}/api/Error/RaiseError/400
+
+###
+GET https://{{host}}/api/Error/RaiseError/404
+
+###
+GET https://{{host}}/api/Error/RaiseError/422
+
+###
+GET https://{{host}}/api/Error/RaiseError/500
+###
+GET https://{{host}}/api/Error/RaiseErrorNoPage

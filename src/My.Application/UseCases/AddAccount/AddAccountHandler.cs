@@ -42,7 +42,7 @@ public class AddAccountHandler : IRequestHandler<AddAccountCommand, DomainAccoun
 
         if (validationResult.Errors.Count > 0)
         {
-            throw new Exceptions.ValidationException(validationResult);
+            throw new Exceptions.MyValidationException(validationResult);
         }
 
         var isLegacy = _featureFlag.IsFeatureEnabled(FeatureFlag.FeatureDefaultSystemLegacy);

@@ -79,7 +79,7 @@ public class AddAccountHandlerTests
             _mapperMock.Object);
 
         // Act and assert that the handler throws a ValidationException
-        await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(request, cancellationToken)).ConfigureAwait(true);
+        await Assert.ThrowsAsync<MyValidationException>(() => handler.Handle(request, cancellationToken)).ConfigureAwait(true);
         // var result = await handler.Handle(request, cancellationToken).ConfigureAwait(true);
 
         // // Assert

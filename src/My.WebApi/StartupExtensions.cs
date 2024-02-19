@@ -1,8 +1,11 @@
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
+using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using My.Application;
+using My.Application.Exceptions;
 using My.Domain;
 using My.Domain.Contracts;
 using My.Infrastructure.EventBus;
@@ -11,6 +14,7 @@ using My.Infrastructure.Legacy;
 using My.Infrastructure.Modern;
 using My.Infrastructure.MySysRouter;
 using My.WebApi.Middleware;
+using My.WebApi.ProblemDetailsExt;
 using Serilog;
 using Serilog.Events;
 
@@ -34,7 +38,6 @@ public static class StartupExtensions
         {
             options.AddToLoggingScope = true;
             options.CorrelationIdGenerator = () => Guid.NewGuid().ToString();
-
             options.IncludeInResponse = true;
             options.RequestHeader = "X-Correlation-Id";
         });
@@ -55,6 +58,69 @@ public static class StartupExtensions
 
         builder.Services.AddControllers();
 
+        //builder.Services.Configure<ApiBehaviorOptions>(options =>
+        //{
+        //    // Redefine the factory method that is used to create a 400 Bad Request response when Model validation fails.
+        //    // In this example, the status code is replaced using 422 instead of 400.
+        //    options.InvalidModelStateResponseFactory = actionContext =>
+        //    {
+        //        var errors = actionContext.ModelState.Where(e => e.Value?.Errors.Any() ?? false)
+        //            .SelectMany(e => e.Value.Errors.Select(x => new ValidationError(e.Key, x.ErrorMessage)));
+
+        //        var httpContext = actionContext.HttpContext;
+        //        var statusCode = StatusCodes.Status422UnprocessableEntity;
+        //        var problemDetails = new ProblemDetails
+        //        {
+        //            Status = statusCode,
+        //            Type = $"https://httpstatuses.com/{statusCode}",
+        //            Instance = httpContext.Request.Path,
+        //            Title = "Validation errors occurred"
+        //        };
+
+        //        problemDetails.Extensions.Add("traceId", httpContext.TraceIdentifier);
+        //        problemDetails.Extensions.Add("errors", errors);
+
+        //        var result = new ObjectResult(problemDetails)
+        //        {
+        //            StatusCode = statusCode
+        //        };
+
+        //        return result;
+        //    };
+        //});
+
+        builder.Services.AddProblemDetails(options =>
+        {
+            // Custom mapping function for FluentValidation's ValidationException.
+            options.MapFluentValidationException();
+            options.MapMyValidationException();
+
+            options.Map<ApplicationException>(ex => new StatusCodeProblemDetails(StatusCodes.Status400BadRequest));
+            options.Map<NotFoundException>(ex => new ProblemDetails
+            {
+                Title = "Not Found",
+                Status = StatusCodes.Status404NotFound,
+                Detail = ex.Message
+            });
+
+            options.MapToStatusCode<BadRequestException>(StatusCodes.Status400BadRequest);
+
+            // You can configure the middleware to re-throw certain types of exceptions, all exceptions or based on a predicate.
+            // This is useful if you have upstream middleware that needs to do additional handling of exceptions.
+            options.Rethrow<NotSupportedException>();
+
+            // This will map NotImplementedException to the 501 Not Implemented status code.
+            options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
+
+            // This will map HttpRequestException to the 503 Service Unavailable status code.
+            options.MapToStatusCode<HttpRequestException>(StatusCodes.Status503ServiceUnavailable);
+
+            // Because exceptions are handled polymorphically, this will act as a "catch all" mapping, which is why it's added last.
+            // If an exception other than NotImplementedException and HttpRequestException is thrown, this will handle it.
+            options.MapToStatusCode<Exception>(StatusCodes.Status500InternalServerError);
+
+        });
+
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -68,12 +134,13 @@ public static class StartupExtensions
     //configure the HTTP request/response pipeline
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        app.UseProblemDetails();
 
         app.UseCorrelationId();
 
         if (app.Environment.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
@@ -84,7 +151,7 @@ public static class StartupExtensions
         //app.UseRouting();
 
         //app.UseAuthentication();
-        app.UseMiddleware<ExceptionHandlerMiddleware>();
+        //app.UseMiddleware<ExceptionHandlerMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
 
         app.UseAuthorization();
@@ -96,5 +163,5 @@ public static class StartupExtensions
         return app;
 
     }
-
+    internal record ValidationError(string Name, string Message);
 }

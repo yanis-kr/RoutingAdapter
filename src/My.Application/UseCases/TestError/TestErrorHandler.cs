@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using My.Application.Exceptions;
 using FluentValidation.Results;
+using FluentValidation;
 
 namespace My.WebApi.Controllers;
 
@@ -26,20 +27,23 @@ public class TestErrorHandler : IRequestHandler<TestErrorQuery, string>
                 throw new Exception("Error 500 - Internal Server Exception");
             case 404:
                 _logger.LogError(result);
-                throw new NotFoundException("name1", "key1");
-            case 400:
+                throw new NotFoundException(result); 
+            case 422:
                 _logger.LogError(result);
                 ValidationResult validationResult = new ValidationResult();
                 validationResult.Errors.Add(new ValidationFailure("fail1", "Validation failure 1"));
                 validationResult.Errors.Add(new ValidationFailure("fail2", "Validation failure 2"));
-                ValidationException validationException = new ValidationException(validationResult);
+                ValidationException validationException = new ValidationException(validationResult.Errors);
 
                 throw validationException;
-            default:
+
+            case 400:
                 _logger.LogError(result);
                 throw new BadRequestException(result);
-        }
 
-        //return await Task.FromResult(result).ConfigureAwait(true);
+            default:
+                result = $"Error will only be raised for IDs 400,404,422,500. This error #: {request.Id}";
+                return await Task.FromResult(result).ConfigureAwait(true);
+        }
     }
 }

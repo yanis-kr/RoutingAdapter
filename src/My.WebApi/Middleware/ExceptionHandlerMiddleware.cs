@@ -1,64 +1,64 @@
-using My.Application.Exceptions;
-using System.Net;
-using System.Text.Json;
+//using My.Application.Exceptions;
+//using System.Net;
+//using System.Text.Json;
 
-namespace My.WebApi.Middleware;
+//namespace My.WebApi.Middleware;
 
-public class ExceptionHandlerMiddleware
-{
-    private readonly RequestDelegate _next;
+//public class ExceptionHandlerMiddleware
+//{
+//    private readonly RequestDelegate _next;
 
-    public ExceptionHandlerMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
+//    public ExceptionHandlerMiddleware(RequestDelegate next)
+//    {
+//        _next = next;
+//    }
 
-    public async Task Invoke(HttpContext context)
-    {
-        try
-        {
-            await _next(context).ConfigureAwait(true);
-        }
-        catch (Exception ex)
-        {
-            await ConvertException(context, ex).ConfigureAwait(true);
-        }
-    }
+//    public async Task Invoke(HttpContext context)
+//    {
+//        try
+//        {
+//            await _next(context).ConfigureAwait(true);
+//        }
+//        catch (Exception ex)
+//        {
+//            await ConvertException(context, ex).ConfigureAwait(true);
+//        }
+//    }
 
-    private static Task ConvertException(HttpContext context, Exception exception)
-    {
-        var httpStatusCode = HttpStatusCode.InternalServerError;
+//    private static Task ConvertException(HttpContext context, Exception exception)
+//    {
+//        var httpStatusCode = HttpStatusCode.InternalServerError;
 
-        context.Response.ContentType = "application/json";
+//        context.Response.ContentType = "application/json";
 
-        var result = string.Empty;
+//        var result = string.Empty;
 
-        switch (exception)
-        {
-            case ValidationException validationException:
+//        switch (exception)
+//        {
+//            case ValidationException validationException:
 
-                httpStatusCode = HttpStatusCode.BadRequest;
-                result = JsonSerializer.Serialize(validationException.ValdationErrors);
-                break;
-            case BadRequestException badRequestException:
-                httpStatusCode = HttpStatusCode.BadRequest;
-                //result = badRequestException.Message;
-                break;
-            case NotFoundException:
-                httpStatusCode = HttpStatusCode.NotFound;
-                break;
-            case Exception:
-                httpStatusCode = HttpStatusCode.InternalServerError;
-                break;
-        }
+//                httpStatusCode = HttpStatusCode.BadRequest;
+//                result = JsonSerializer.Serialize(validationException.ValdationErrors);
+//                break;
+//            case BadRequestException badRequestException:
+//                httpStatusCode = HttpStatusCode.BadRequest;
+//                //result = badRequestException.Message;
+//                break;
+//            case NotFoundException:
+//                httpStatusCode = HttpStatusCode.NotFound;
+//                break;
+//            case Exception:
+//                httpStatusCode = HttpStatusCode.InternalServerError;
+//                break;
+//        }
 
-        context.Response.StatusCode = (int)httpStatusCode;
+//        context.Response.StatusCode = (int)httpStatusCode;
 
-        if (result == string.Empty)
-        {
-            result = JsonSerializer.Serialize(new { error = exception.Message });
-        }
+//        if (result == string.Empty)
+//        {
+//            result = JsonSerializer.Serialize(new { error = exception.Message });
+//        }
 
-        return context.Response.WriteAsync(result);
-    }
-}
+//        return context.Response.WriteAsync(result);
+//    }
+//}

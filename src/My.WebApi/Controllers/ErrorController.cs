@@ -27,5 +27,4 @@ public class ErrorController : ControllerBase
 
         return Ok(result);
     }
-
 }
