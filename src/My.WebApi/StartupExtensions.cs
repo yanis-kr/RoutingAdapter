@@ -1,3 +1,4 @@
+using System.Runtime;
 using CorrelationId;
 using CorrelationId.DependencyInjection;
 using Elastic.CommonSchema.Serilog;
@@ -7,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using My.Application;
 using My.Application.Exceptions;
 using My.Domain;
+using My.Domain.ConfigOptions;
 using My.Domain.Contracts;
 using My.Infrastructure.EventBus;
 using My.Infrastructure.FeatureFlags;
@@ -56,8 +58,11 @@ public static class StartupExtensions
         builder.Services.AddSingleton<IRepositoryLegacy, RepositoryLegacyStub>();
         builder.Services.AddSingleton<IRepositoryModern, RepositoryModernStub>();
 
+        builder.Services.Configure<CustomLogging>(builder.Configuration.GetSection("CustomLogging"));
+
         builder.Services.AddControllers();
 
+        #region Behavior Options
         //builder.Services.Configure<ApiBehaviorOptions>(options =>
         //{
         //    // Redefine the factory method that is used to create a 400 Bad Request response when Model validation fails.
@@ -88,6 +93,7 @@ public static class StartupExtensions
         //        return result;
         //    };
         //});
+        #endregion
 
         builder.Services.AddProblemDetails(options =>
         {
