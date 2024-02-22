@@ -41,4 +41,13 @@ public class AccountsController : ControllerBase
         //return CreatedAtRoute("GetAccountById", new { id = result.Id }, result);
         return Ok(result);
     }
+    //[HttpGet("savings")]
+    //public async Task<ActionResult> GetSavings()
+    //{
+    //    var savings = await _mediator.Send(new GetSavingsQuery()).ConfigureAwait(true);
+
+    //    return Ok(savings);
+    //}
+
+
 }
