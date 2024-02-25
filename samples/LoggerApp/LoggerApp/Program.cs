@@ -72,4 +72,9 @@ app.MapGet("/api/echo", async (HttpBinClient client) =>
 app.MapPost("/api/echo", async (MyDto dto, HttpBinClient client) =>
     await MyDtoHandler.HandlePostAsync(dto, client)); // Directly returns a method call.
 
+app.MapPost("/api/dynamic", async (HttpRequest request) =>
+{
+    // Delegate the request handling to the DynamicDtoHandler class
+    return await DynamicDtoHandler.HandleDynamicDtoAsync(request);
+});
 app.Run();

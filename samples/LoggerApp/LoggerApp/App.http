@@ -21,6 +21,17 @@ Accept: application/json
   "Id": 123,
   "Name": "Name1"
 }
+###
+POST {{url}}/api/dynamic
+Content-Type: application/json
+Accept: application/json
+
+{
+  "foo": 123,
+  "Barr": "Name1"
+}
+
+
 
 ###
 # this endpoint echoes body and headers in the response
