@@ -26,22 +26,24 @@ public static class StartupExtensions
     //add services to the DI container
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Logging.ClearProviders();
         builder.Host.UseSerilog((context, loggerConfiguration) =>
         {
             loggerConfiguration
+                .WriteTo.Console()
                 .ReadFrom.Configuration(context.Configuration)
+                .Enrich.WithEnvironmentName()
                 .MinimumLevel.Override("CorrelationId", LogEventLevel.Error)
-                .Enrich.FromLogContext()
-                .WriteTo.Console(new EcsTextFormatter());
+                .Enrich.FromLogContext();
         });
 
-        builder.Services.AddDefaultCorrelationId(options =>
-        {
-            options.AddToLoggingScope = true;
-            options.CorrelationIdGenerator = () => Guid.NewGuid().ToString();
-            options.IncludeInResponse = true;
-            options.RequestHeader = "X-Correlation-Id";
-        });
+        //builder.Services.AddDefaultCorrelationId(options =>
+        //{
+        //    options.AddToLoggingScope = true;
+        //    options.CorrelationIdGenerator = () => Guid.NewGuid().ToString();
+        //    options.IncludeInResponse = true;
+        //    options.RequestHeader = "X-Correlation-Id";
+        //});
 
         //mediatR registrations
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyDomainServiceActivator).Assembly));
@@ -143,7 +145,7 @@ public static class StartupExtensions
     {
         app.UseProblemDetails();
 
-        app.UseCorrelationId();
+        //app.UseCorrelationId();
 
         if (app.Environment.IsDevelopment())
         {
@@ -160,6 +162,8 @@ public static class StartupExtensions
         //app.UseAuthentication();
         //app.UseMiddleware<ExceptionHandlerMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
+        app.UseMiddleware<RequestResponseLoggingMiddleware>();
+        app.UseMiddleware<EchoMiddleware>();
 
         app.UseAuthorization();
 
