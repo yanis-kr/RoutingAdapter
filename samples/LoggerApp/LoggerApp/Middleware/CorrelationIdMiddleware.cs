@@ -12,17 +12,16 @@ public class CorrelationIdMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        const string correlationIdName = "CorrelationId";
-        context.Request.Headers.TryGetValue(correlationIdName, out var correlationIdValues);
+        context.Request.Headers.TryGetValue(Constants.CorrelationIdName, out var correlationIdValues);
         var correlationId = correlationIdValues.FirstOrDefault();
         if (string.IsNullOrEmpty(correlationId))
         {
             correlationId = System.Guid.NewGuid().ToString();
-            context.Request.Headers.Append(correlationIdName, correlationId);
-            Log.Information($"Adding new CorrelationId: {correlationId}");
+            context.Request.Headers.Append(Constants.CorrelationIdName, correlationId);
+            Log.Information($"Adding new X-Correlation-ID: {correlationId}");
         } else
         {
-            Log.Information($"Found CorrelationId: {correlationId}");
+            Log.Information($"Found X-Correlation-ID: {correlationId}");
         }
 
         // Call the next middleware in the pipeline

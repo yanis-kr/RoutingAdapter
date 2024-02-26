@@ -10,9 +10,10 @@ Accept: application/json
 
 GET {{url}}/api/echo
 Accept: application/json
-CorrelationId: 123
+X-Correlation-ID: 123
 ###
 
+#POST doesn't show X-Correlation-ID for some reason
 POST {{url}}/api/echo
 Content-Type: application/json
 Accept: application/json

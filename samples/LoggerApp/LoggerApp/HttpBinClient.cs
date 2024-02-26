@@ -16,10 +16,10 @@ public class HttpBinClient
     public async Task<string> GetAnythingAsync()
     {
         var request = new HttpRequestMessage(HttpMethod.Get, "anything");
-        var correlationId = _httpContextAccessor.HttpContext?.Request.Headers["CorrelationId"].ToString();
+        var correlationId = _httpContextAccessor.HttpContext?.Request.Headers[Constants.CorrelationIdName].ToString();
         if (!string.IsNullOrEmpty(correlationId))
         {
-            request.Headers.Add("CorrelationId", correlationId);
+            request.Headers.Add(Constants.CorrelationIdName, correlationId);
         }
 
         var response = await _client.SendAsync(request);

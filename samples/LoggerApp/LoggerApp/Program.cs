@@ -1,9 +1,7 @@
-using Serilog;
-using LoggerApp;
-using LoggerApp.Models;
-using LoggerApp.Handlers;
-using LoggerApp.Middleware;
 using System.Reflection;
+using LoggerApp;
+using LoggerApp.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,27 +52,6 @@ app.UseSerilogRequestLogging(); // Enable request logging
 app.MapHealthChecks("/health");
 
 // Set minimal API endpoints
-// *************************
-// Delegate with a method body for potentially complex logic.
+app.MapApiEndpoints();
 
-/// <summary>
-/// Sends GET request to external API https://httpbin.org/ and returns it's echo response
-/// </summary>
-app.MapGet("/api/echo", async (HttpBinClient client) =>
-{
-    return await client.GetAnythingAsync();
-});
-
-/// <summary>
-/// Sends POST request to external API https://httpbin.org/ with sample DTO and returns it's echo response
-/// </summary>
-// Delegate as a single expression for simple operations.
-app.MapPost("/api/echo", async (MyDto dto, HttpBinClient client) =>
-    await MyDtoHandler.HandlePostAsync(dto, client)); // Directly returns a method call.
-
-app.MapPost("/api/dynamic", async (HttpRequest request) =>
-{
-    // Delegate the request handling to the DynamicDtoHandler class
-    return await DynamicDtoHandler.HandleDynamicDtoAsync(request);
-});
 app.Run();
