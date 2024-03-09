@@ -1,6 +1,5 @@
 using CorrelationId;
 using CorrelationId.DependencyInjection;
-using Elastic.CommonSchema.Serilog;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -14,6 +13,7 @@ using My.Infrastructure.FeatureFlags;
 using My.Infrastructure.Legacy;
 using My.Infrastructure.Modern;
 using My.Infrastructure.MySysRouter;
+using My.WebApi.HttpHandlers;
 using My.WebApi.Middleware;
 using My.WebApi.ProblemDetailsExt;
 using Serilog;
@@ -30,20 +30,20 @@ public static class StartupExtensions
         builder.Host.UseSerilog((context, loggerConfiguration) =>
         {
             loggerConfiguration
-                .WriteTo.Console()
+                .WriteTo.Console(formatProvider: null)
                 .ReadFrom.Configuration(context.Configuration)
                 .Enrich.WithEnvironmentName()
                 .MinimumLevel.Override("CorrelationId", LogEventLevel.Error)
                 .Enrich.FromLogContext();
         });
 
-        //builder.Services.AddDefaultCorrelationId(options =>
-        //{
-        //    options.AddToLoggingScope = true;
-        //    options.CorrelationIdGenerator = () => Guid.NewGuid().ToString();
-        //    options.IncludeInResponse = true;
-        //    options.RequestHeader = "X-Correlation-Id";
-        //});
+        builder.Services.AddDefaultCorrelationId(options =>
+        {
+            options.AddToLoggingScope = true;
+            options.CorrelationIdGenerator = () => Guid.NewGuid().ToString();
+            options.IncludeInResponse = true;
+            options.RequestHeader = HeaderConstants.HeaderCorrelationId;
+        });
 
         //mediatR registrations
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MyDomainServiceActivator).Assembly));
@@ -58,8 +58,15 @@ public static class StartupExtensions
         builder.Services.AddSingleton<IFeatureFlag, FeatureFlagsStub>();
         builder.Services.AddSingleton<IRepositoryLegacy, RepositoryLegacyStub>();
         builder.Services.AddSingleton<IRepositoryModern, RepositoryModernStub>();
-        //add typed http client
-        builder.Services.AddHttpClient<ISysRouter, MySysRouterHttpStub>();
+
+        //PropagateHeaderHandler will use IHttpContextAccessor to access the current request and retrieve
+        //the header value to add it to the outgoing request. 
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddTransient<PropagateHeaderHandler>();
+
+        //add typed http client with custom handler
+        builder.Services.AddHttpClient<ISysRouter, MySysRouterHttpStub>()
+            .AddHttpMessageHandler<PropagateHeaderHandler>();
 
         builder.Services.Configure<CustomLogging>(builder.Configuration.GetSection("CustomLogging"));
 
@@ -145,7 +152,7 @@ public static class StartupExtensions
     {
         app.UseProblemDetails();
 
-        //app.UseCorrelationId();
+        app.UseCorrelationId();
 
         if (app.Environment.IsDevelopment())
         {
@@ -163,7 +170,7 @@ public static class StartupExtensions
         //app.UseMiddleware<ExceptionHandlerMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
         app.UseMiddleware<RequestResponseLoggingMiddleware>();
-        app.UseMiddleware<EchoMiddleware>();
+        //app.UseMiddleware<EchoMiddleware>();
 
         app.UseAuthorization();
 
